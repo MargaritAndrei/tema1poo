@@ -7,12 +7,17 @@ public abstract class Plant extends Entity {
         super(name, mass);
         growthProgress = 0;
         maturityState = MaturityState.young;
+        scanned = false;
     }
     protected MaturityState maturityState;
     protected double growthProgress;
+    public boolean scanned;
     protected abstract double categoryOxygen();
     public abstract double plantPossibility();
     public void grow (double amount) {
+        if (maturityState == MaturityState.dead) {
+            return;
+        }
         growthProgress += amount;
         if (growthProgress >= 1.0) {
             growthProgress = 0;

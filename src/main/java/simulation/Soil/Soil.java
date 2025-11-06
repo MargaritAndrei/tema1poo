@@ -2,10 +2,11 @@ package simulation.Soil;
 
 import simulation.Entity;
 import simulation.Water.Water;
+import simulation.Plant.Plant;
 
 public abstract class Soil extends Entity {
     public Soil(String name, double mass, double nitrogen, double waterRetention,
-    double soilpH, double organicMatter) {
+                double soilpH, double organicMatter) {
         super(name, mass);
         this.nitrogen = nitrogen;
         this.waterRetention = waterRetention;
@@ -21,9 +22,21 @@ public abstract class Soil extends Entity {
     public abstract double calculateQuality();
     public abstract double calculateBlockProbability();
     public void tryToAbsorbWater(Water water, int currentTimestamp) {
-
+        if (water != null && water.scanned) {
+            if (currentTimestamp - lastWaterAbsorptionTimestamp >= 2) {
+                waterRetention += 0.1;
+                waterRetention = Entity.round(waterRetention);
+                lastWaterAbsorptionTimestamp = currentTimestamp;
+            }
+        }
     }
     public void addOrganicMatter(double amount) {
-
+        organicMatter += amount;
+        organicMatter = Entity.round(organicMatter);
+    }
+    public void tryToGrowPlant(Plant plant) {
+        if (plant != null && plant.scanned) {
+            plant.grow(0.2);
+        }
     }
 }

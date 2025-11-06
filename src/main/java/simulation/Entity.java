@@ -3,6 +3,7 @@ package simulation;
 public abstract class Entity {
     private String name;
     private double mass;
+
     public Entity(String name, double mass) {
         this.name = name;
         this.mass = mass;
@@ -17,6 +18,9 @@ public abstract class Entity {
         this.name = name;
     }
     public void setMass(double mass) {
-        this.mass = mass;
+        this.mass = Entity.round(mass);
+    }
+    public static double round(double value) {
+        return Math.round(value * 100.0) / 100.0;
     }
 }
