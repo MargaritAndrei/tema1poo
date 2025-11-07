@@ -1,4 +1,4 @@
-package simulation.Plant;
+package simulation.plant;
 
 public enum MaturityState {
     young, mature, old, dead

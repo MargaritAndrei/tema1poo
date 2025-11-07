@@ -1,4 +1,4 @@
-package simulation.Plant;
+package simulation.plant;
 
 import simulation.Entity;
 

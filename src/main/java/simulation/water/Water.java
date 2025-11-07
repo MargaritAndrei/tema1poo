@@ -1,10 +1,8 @@
-package simulation.Water;
+package simulation.water;
 
-import lombok.Getter;
-import simulation.Air.Air;
+import simulation.air.Air;
 import simulation.Entity;
-import simulation.Plant.Plant;
-import simulation.Soil.Soil;
+import simulation.plant.Plant;
 
 import static java.lang.Math.abs;
 

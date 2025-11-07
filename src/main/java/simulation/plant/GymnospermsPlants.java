@@ -1,4 +1,4 @@
-package simulation.Plant;
+package simulation.plant;
 
 public class GymnospermsPlants extends Plant {
     public GymnospermsPlants(String name, double mass) {

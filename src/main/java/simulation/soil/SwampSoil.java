@@ -1,4 +1,4 @@
-package simulation.Soil;
+package simulation.soil;
 
 import simulation.Entity;
 

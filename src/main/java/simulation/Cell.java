@@ -1,11 +1,10 @@
-package simulation.Cell;
+package simulation;
 
-import simulation.Entity;
-import simulation.Soil.Soil;
-import simulation.Air.Air;
-import simulation.Plant.Plant;
-import simulation.Animal.Animal;
-import simulation.Water.Water;
+import simulation.soil.Soil;
+import simulation.air.Air;
+import simulation.plant.Plant;
+import simulation.animal.Animal;
+import simulation.water.Water;
 
 public class Cell {
     public Cell(Soil soil, Air air, Plant plant, Animal animal, Water water) {
@@ -50,11 +49,11 @@ public class Cell {
     public void setWater(Water water) {
         this.water = water;
     }
-    public int calculateRobotRiskScore() {
+    public int calculateRobotRiskScore(int currentTimestamp) {
         double sum = 0;
         int count = 2;
         sum += soil.calculateBlockProbability();
-        sum += air.calculateToxicity();
+        sum += air.calculateToxicity(currentTimestamp);
         if (plant != null) {
             sum += plant.plantPossibility();
             count++;
@@ -63,12 +62,12 @@ public class Cell {
             sum += animal.calculateAttackRisk();
             count++;
         }
-        double mean = sum / count;
+        double mean = Math.abs(sum / count);
         return (int) Math.round(mean);
     }
     public void processEvolution(int currentTimestamp) {
         if (animal != null && animal.scanned) {
-            animal.updateState(air);
+            animal.updateState(air, currentTimestamp);
         }
         soil.tryToGrowPlant(plant);
         if (water != null && water.scanned) {

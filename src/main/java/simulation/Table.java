@@ -1,10 +1,10 @@
 package simulation;
 
-import simulation.Cell.Cell;
+import simulation.Cell;
 
-public class Map {
+public class Table {
     private Cell[][] grid;
-    public Map(int height, int width) {
+    public Table(int height, int width) {
         grid = new Cell[height][width];
         this.height = height;
         this.width = width;

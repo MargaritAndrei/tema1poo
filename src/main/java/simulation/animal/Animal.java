@@ -1,12 +1,12 @@
-package simulation.Animal;
+package simulation.animal;
 
-import simulation.Air.Air;
-import simulation.Cell.Cell;
+import simulation.Cell;
+import simulation.Table;
+import simulation.air.Air;
 import simulation.Entity;
-import simulation.Map;
-import simulation.Plant.Plant;
-import simulation.Soil.Soil;
-import simulation.Water.Water;
+import simulation.plant.Plant;
+import simulation.soil.Soil;
+import simulation.water.Water;
 
 public abstract class Animal extends Entity {
     public Animal(String name, double mass) {
@@ -20,14 +20,16 @@ public abstract class Animal extends Entity {
     protected int lastMoveTimestamp;
     protected abstract boolean isPredator();
     public abstract double animalPossibility();
-    public void updateState(Air currentAir) {
+    public void updateState(Air currentAir, int currentTimestamp) {
         double toxicThreshold = 0.8 * currentAir.getmaxScore();
-        double toxicity = currentAir.calculateToxicity();
+        double toxicity = currentAir.calculateToxicity(currentTimestamp);
         if (toxicity > toxicThreshold) {
             state = AnimalState.sick;
+        } else if (state == AnimalState.sick) {
+            state = AnimalState.hungry;
         }
     }
-    public Cell move(Map map, int x, int y, int currentTimestamp) {
+    public Cell move(Table map, int x, int y, int currentTimestamp) {
         if (!scanned || currentTimestamp - lastMoveTimestamp < 2) {
             return null;
         }

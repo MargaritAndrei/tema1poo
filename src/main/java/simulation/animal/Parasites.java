@@ -1,4 +1,4 @@
-package simulation.Animal;
+package simulation.animal;
 
 public class Parasites extends Animal {
     public Parasites(String name, double mass) {

@@ -1,4 +1,4 @@
-package simulation.Animal;
+package simulation.animal;
 
 public class Carnivores extends Animal {
     public Carnivores(String name, double mass) {

@@ -1,15 +1,15 @@
-package simulation.Plant;
+package simulation.plant;
 
-public class Algae extends Plant {
-    public Algae (String name, double mass) {
+public class Mosses extends Plant {
+    public Mosses(String name, double mass) {
         super(name, mass);
     }
     @Override
     protected double categoryOxygen() {
-        return 0.5;
+        return 0.8;
     }
     @Override
     public double plantPossibility() {
-        return 20;
+        return 40;
     }
 }

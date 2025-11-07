@@ -1,8 +1,8 @@
-package simulation.Soil;
+package simulation.soil;
 
 import simulation.Entity;
-import simulation.Water.Water;
-import simulation.Plant.Plant;
+import simulation.water.Water;
+import simulation.plant.Plant;
 
 public abstract class Soil extends Entity {
     public Soil(String name, double mass, double nitrogen, double waterRetention,
@@ -38,5 +38,9 @@ public abstract class Soil extends Entity {
         if (plant != null && plant.scanned) {
             plant.grow(0.2);
         }
+    }
+    public void addWaterRetention(double amount) {
+        waterRetention += amount;
+        waterRetention = Entity.round(waterRetention);
     }
 }

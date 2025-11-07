@@ -1,7 +1,7 @@
-package simulation.Animal;
+package simulation.animal;
 
-public class Detritivores extends Animal {
-    public Detritivores(String name, double mass) {
+public class Omnivores extends Animal {
+    public Omnivores(String name, double mass) {
         super(name, mass);
     }
     @Override
@@ -10,6 +10,6 @@ public class Detritivores extends Animal {
     }
     @Override
     public double animalPossibility() {
-        return 90;
+        return 60;
     }
 }
