@@ -17,6 +17,15 @@ public abstract class Air extends Entity {
         this.weatherEffectValue = 0.0;
         this.weatherEffectEndTimestamp = 0;
     }
+    public double getHumidity() {
+        return humidity;
+    }
+    public double getTemperature() {
+        return temperature;
+    }
+    public double getOxygenLevel() {
+        return oxygenLevel;
+    }
     public double calculateToxicity(int currentTimestamp) {
         double qualityScore = this.airQualityScore(currentTimestamp);
         double maxScore = this.maxScore();

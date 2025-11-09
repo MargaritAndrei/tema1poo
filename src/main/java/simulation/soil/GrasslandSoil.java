@@ -19,4 +19,7 @@ public class GrasslandSoil extends Soil {
         double score = ((50 - rootDensity) + waterRetention * 0.5) / 75.0 * 100;
         return Entity.round(score);
     }
+    public double getRootDensity() {
+        return rootDensity;
+    }
 }

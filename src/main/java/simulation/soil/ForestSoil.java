@@ -20,4 +20,7 @@ public class ForestSoil extends Soil {
         double score = (waterRetention * 0.6 + leafLitter * 0.4) / 80.0 * 100;
         return Entity.round(score);
     }
+    public double getLeafLitter() {
+        return leafLitter;
+    }
 }

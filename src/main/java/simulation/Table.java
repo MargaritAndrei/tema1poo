@@ -4,12 +4,18 @@ import simulation.Cell;
 
 public class Table {
     private Cell[][] grid;
+    private int height, width;
     public Table(int height, int width) {
         grid = new Cell[height][width];
         this.height = height;
         this.width = width;
     }
-    private int height, width;
+    public int getHeight() {
+        return height;
+    }
+    public int getWidth() {
+        return width;
+    }
     public void setCell(int x, int y, Cell cell) {
         this.grid[x][y] = cell;
     }

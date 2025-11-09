@@ -7,18 +7,21 @@ import simulation.animal.Animal;
 import simulation.water.Water;
 
 public class Cell {
-    public Cell(Soil soil, Air air, Plant plant, Animal animal, Water water) {
+    public Cell(Soil soil, Air air, Plant plant, Animal animal, Water water, int x, int y) {
         this.soil = soil;
         this.air = air;
         this.plant = plant;
         this.animal = animal;
         this.water = water;
+        this.x = x;
+        this.y = y;
     }
     private Soil soil;
     private Air air;
     private Plant plant;
     private Animal animal;
     private Water water;
+    private int x,y;
     public Soil getSoil() {
         return soil;
     }
@@ -34,6 +37,12 @@ public class Cell {
     public Water getWater() {
         return water;
     }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
     public void setSoil(Soil soil) {
         this.soil = soil;
     }
@@ -48,6 +57,12 @@ public class Cell {
     }
     public void setWater(Water water) {
         this.water = water;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
     }
     public int calculateRobotRiskScore(int currentTimestamp) {
         double sum = 0;

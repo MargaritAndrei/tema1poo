@@ -19,4 +19,7 @@ public class TundraSoil extends Soil {
         double score = (50 - permafrostDepth) / 50.0 * 100;
         return Entity.round(score);
     }
+    public double getPermafrostDepth() {
+        return permafrostDepth;
+    }
 }

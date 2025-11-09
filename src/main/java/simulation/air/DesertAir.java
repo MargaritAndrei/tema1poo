@@ -9,6 +9,9 @@ public class DesertAir extends Air {
         super(name, mass, humidity, temperature, oxygenLevel);
         this.dustParticles = dustParticles;
     }
+    public double getDustParticles() {
+        return dustParticles;
+    }
     @Override
     public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
         if ("desertStorm".equalsIgnoreCase(weatherType)) {

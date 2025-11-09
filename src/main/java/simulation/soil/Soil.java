@@ -21,6 +21,18 @@ public abstract class Soil extends Entity {
     protected int lastWaterAbsorptionTimestamp;
     public abstract double calculateQuality();
     public abstract double calculateBlockProbability();
+    public double getNitrogen() {
+        return nitrogen;
+    }
+    public double getWaterRetention() {
+        return waterRetention;
+    }
+    public double getSoilpH() {
+        return soilpH;
+    }
+    public double getOrganicMatter() {
+        return organicMatter;
+    }
     public void tryToAbsorbWater(Water water, int currentTimestamp) {
         if (water != null && water.scanned) {
             if (currentTimestamp - lastWaterAbsorptionTimestamp >= 2) {

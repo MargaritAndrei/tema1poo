@@ -9,6 +9,9 @@ public class TemperateAir extends Air {
         super(name, mass, humidity, temperature, oxygenLevel);
         this.pollenLevel = pollenLevel;
     }
+    public double getPollenLevel() {
+        return pollenLevel;
+    }
     @Override
     public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
         if ("newSeason".equalsIgnoreCase(weatherType)) {

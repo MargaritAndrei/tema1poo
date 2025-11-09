@@ -3,15 +3,15 @@ package simulation.plant;
 import simulation.Entity;
 
 public abstract class Plant extends Entity {
+    protected MaturityState maturityState;
+    protected double growthProgress;
+    public boolean scanned;
     public Plant (String name, double mass) {
         super(name, mass);
         growthProgress = 0;
         maturityState = MaturityState.young;
         scanned = false;
     }
-    protected MaturityState maturityState;
-    protected double growthProgress;
-    public boolean scanned;
     protected abstract double categoryOxygen();
     public abstract double plantPossibility();
     public void grow (double amount) {

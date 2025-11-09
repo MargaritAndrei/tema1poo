@@ -7,7 +7,15 @@ import simulation.plant.Plant;
 import static java.lang.Math.abs;
 
 public class Water extends Entity {
-    public Water(String name, double mass, double salinity, double ph,
+    protected String type;
+    protected double salinity;
+    protected double ph;
+    protected double purity;
+    protected double turbidity;
+    protected double contaminantIndex;
+    public boolean isFrozen, scanned;
+    protected int lastInteractionTimestamp;
+    public Water(String name, double mass, String type, double salinity, double ph,
                  double purity, double turbidity, double contaminantIndex, boolean isFrozen) {
         super(name, mass);
         scanned = false;
@@ -19,13 +27,24 @@ public class Water extends Entity {
         this.contaminantIndex = contaminantIndex;
         this.isFrozen = isFrozen;
     }
-    protected double salinity;
-    protected double ph;
-    protected double purity;
-    protected double turbidity;
-    protected double contaminantIndex;
-    public boolean isFrozen, scanned;
-    protected int lastInteractionTimestamp;
+    public String getType() {
+        return type;
+    }
+    public double getPurity() {
+        return purity;
+    }
+    public double getPh() {
+        return ph;
+    }
+    public double getSalinity() {
+        return salinity;
+    }
+    public double getTurbidity() {
+        return turbidity;
+    }
+    public double getContaminantIndex() {
+        return  contaminantIndex;
+    }
     public void tryToInteractWithAir(Air air, int currentTimestamp) {
         if (currentTimestamp - lastInteractionTimestamp >= 2) {
             lastInteractionTimestamp = currentTimestamp;

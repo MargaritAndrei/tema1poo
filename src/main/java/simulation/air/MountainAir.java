@@ -9,6 +9,9 @@ public class MountainAir extends Air {
         super(name, mass, humidity, temperature, oxygenLevel);
         this.altitude = altitude;
     }
+    public double getAltitude() {
+        return altitude;
+    }
     @Override
     public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
         if ("peopleHiking".equalsIgnoreCase(weatherType)) {

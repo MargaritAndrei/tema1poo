@@ -19,4 +19,7 @@ public class DesertSoil extends Soil {
         double score = (100 - waterRetention + salinity) / 100.0 * 100;
         return Entity.round(score);
     }
+    public double getSalinity() {
+        return salinity;
+    }
 }

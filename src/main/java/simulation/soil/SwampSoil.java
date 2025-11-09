@@ -19,4 +19,7 @@ public class SwampSoil extends Soil {
         double score = waterLogging * 10;
         return Entity.round(score);
     }
+    public double getWaterLogging() {
+        return waterLogging;
+    }
 }

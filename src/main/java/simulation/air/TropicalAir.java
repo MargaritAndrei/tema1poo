@@ -29,4 +29,8 @@ public class TropicalAir extends Air {
     protected double maxScore() {
         return 82;
     }
+
+    public double getCo2Level() {
+        return co2Level;
+    }
 }

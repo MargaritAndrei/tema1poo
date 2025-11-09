@@ -30,4 +30,8 @@ public class PolarAir extends Air {
     protected double maxScore() {
         return 142;
     }
+
+    public double getIceCrystalConcentration() {
+        return iceCrystalConcentration;
+    }
 }

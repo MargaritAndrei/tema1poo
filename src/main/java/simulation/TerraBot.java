@@ -18,12 +18,12 @@ public class TerraBot {
         database = new HashMap<>();
         chargeEndTime = 0;
     }
-    private double energy;
+    private int energy;
     private int x, y;
     private int chargeEndTime;
     private List<String> inventory;
     private Map<String, List<String>> database;
-    public double getEnergy() {
+    public int getEnergy() {
         return energy;
     }
     public int getX() {
@@ -31,6 +31,12 @@ public class TerraBot {
     }
     public int getY() {
         return y;
+    }
+    public List<String> getInventory() {
+        return inventory;
+    }
+    public Map<String, List<String>> getDatabase() {
+        return database;
     }
     public boolean isCharging(int currentTimestamp) {
         return currentTimestamp < chargeEndTime;
@@ -138,8 +144,34 @@ public class TerraBot {
         if (!inventory.contains(componentName)) {
             return "ERROR: Subject not yet saved. Cannot perform action";
         }
-        String requiredFact = "Method to " + improvementType;
-
+        if (!database.containsKey(componentName)) {
+            return "ERROR: Fact not yet saved. Cannot perform action";
+        }
+        List<String> facts = database.get(componentName);
+        boolean foundMethod = false;
+        for (int i = 0; i < facts.size(); i++) {
+            if(facts.get(i).startsWith("Method to")) {
+                foundMethod = true;
+            }
+        }
+        if (!foundMethod) {
+            return "ERROR: Fact not yet saved. Cannot perform action";
+        }
+        inventory.remove(componentName);
+        switch (improvementType) {
+            case "plantVegetation":
+                currentCell.getAir().addOxygen(0.3);
+                return "The " + componentName + " was planted successfully.";
+            case "fertilizeSoil":
+                currentCell.getSoil().addOrganicMatter(0.3);
+                return "The soil was successfully fertilized using " + componentName + ".";
+            case "increaseHumidity":
+                currentCell.getAir().addHumidity(0.2);
+                return "The humidity was successfully increased using " + componentName + ".";
+            case "increaseMoisture":
+                currentCell.getSoil().addWaterRetention(0.2);
+                return "The moisture was successfully increased using " + componentName + ".";
+        }
         return null;
     }
 }

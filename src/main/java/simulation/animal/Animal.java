@@ -18,8 +18,21 @@ public abstract class Animal extends Entity {
     protected AnimalState state;
     public boolean scanned;
     protected int lastMoveTimestamp;
+    protected int x, y;
     protected abstract boolean isPredator();
     public abstract double animalPossibility();
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
     public void updateState(Air currentAir, int currentTimestamp) {
         double toxicThreshold = 0.8 * currentAir.getmaxScore();
         double toxicity = currentAir.calculateToxicity(currentTimestamp);
