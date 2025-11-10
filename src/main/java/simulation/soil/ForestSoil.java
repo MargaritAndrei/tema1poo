@@ -13,7 +13,8 @@ public class ForestSoil extends Soil {
     public double calculateQuality() {
         double score = nitrogen * 1.2 + organicMatter * 2 + waterRetention * 1.5
                 + leafLitter * 0.3;
-        return Math.max(0, Math.min(100, score));
+        score = Math.max(0, Math.min(100, score));
+        return Entity.round(score);
     }
     @Override
     public double calculateBlockProbability() {

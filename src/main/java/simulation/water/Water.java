@@ -20,6 +20,7 @@ public class Water extends Entity {
         super(name, mass);
         scanned = false;
         lastInteractionTimestamp = 0;
+        this.type = type;
         this.salinity = salinity;
         this.ph = ph;
         this.purity = purity;

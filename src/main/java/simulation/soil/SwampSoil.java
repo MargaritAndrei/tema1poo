@@ -12,7 +12,8 @@ public class SwampSoil extends Soil {
     @Override
     public double calculateQuality() {
         double score = nitrogen * 1.1 + organicMatter * 2.2 - waterLogging * 5;
-        return Math.max(0, Math.min(100, score));
+        score = Math.max(0, Math.min(100, score));
+        return Entity.round(score);
     }
     @Override
     public double calculateBlockProbability() {

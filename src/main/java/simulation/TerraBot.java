@@ -74,7 +74,7 @@ public class TerraBot {
         if (spendEnergy(bestScore)) {
             x = bestX;
             y = bestY;
-            return "The robot has successfully moved to position (" + bestX + "," + bestY + ").";
+            return "The robot has successfully moved to position (" + bestX + ", " + bestY + ").";
         }
         return "ERROR: Not enough battery left. Cannot perform action";
     }
@@ -172,6 +172,6 @@ public class TerraBot {
                 currentCell.getSoil().addWaterRetention(0.2);
                 return "The moisture was successfully increased using " + componentName + ".";
         }
-        return null;
+        return "Eroare, esti cam prea bos";
     }
 }

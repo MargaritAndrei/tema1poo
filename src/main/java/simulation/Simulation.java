@@ -258,6 +258,33 @@ public class Simulation {
     private ObjectNode createErrorNode(String message) {
         return createMessageNode(message);
     }
+    public ObjectNode dispatchCommand(CommandInput cmd, int currentTimestamp) {
+        switch (cmd.command) {
+            case "moveRobot":
+                return handleMoveRobot(currentTimestamp);
+            case "rechargeBattery":
+                return handleRechargeBattery(cmd, currentTimestamp);
+            case "scanObject":
+                return handleScanObject(cmd, currentTimestamp);
+            case "learnFact":
+                return handleLearnFact(cmd, currentTimestamp);
+            case "improveEnvironment":
+                return handleImproveEnvironment(cmd, currentTimestamp);
+            case "changeWeatherConditions":
+                return handleChangeWeather(cmd, currentTimestamp);
+            case "getEnergyStatus":
+                return getEnergyStatus(currentTimestamp);
+            case "printKnowledgeBase":
+                return printKnowledgeBase(currentTimestamp);
+            case "printEnvConditions":
+                return printEnvConditions(currentTimestamp);
+            case "printMap":
+                return printMap(currentTimestamp);
+            default:
+                return createErrorNode("ERROR: Unknown command.");
+        }
+    }
+
     private ObjectNode createSoilNode(Soil soil) {
         ObjectNode node = MAPPER.createObjectNode();
         node.put("type", soil.getClass().getSimpleName());
@@ -327,15 +354,20 @@ public class Simulation {
         node.put("type", water.getType());
         node.put("name", water.getName());
         node.put("mass", water.getMass());
-        node.put("isFrozen", water.isFrozen);
         node.put("purity", water.getPurity());
-        node.put("pH", water.getPh());
         node.put("salinity", water.getSalinity());
         node.put("turbidity", water.getTurbidity());
         node.put("contaminantIndex", water.getContaminantIndex());
+        node.put("pH", water.getPh());
+        node.put("isFrozen", water.isFrozen);
         return node;
     }
 
+
+    public ObjectNode handleMoveRobot(int currentTimestamp) {
+        String message = robot.move(this.map, currentTimestamp);
+        return createMessageNode(message);
+    }
     public ObjectNode handleRechargeBattery(CommandInput cmd, int currentTimestamp) {
         String message = robot.rechargeBattery(cmd.timeToCharge, currentTimestamp);
         return createMessageNode(message);
@@ -450,9 +482,6 @@ public class Simulation {
         if (cell.getSoil() != null) {
             data.set("soil", createSoilNode(cell.getSoil()));
         }
-        if (cell.getAir() != null) {
-            data.set("air", createAirNode(cell.getAir(), currentTimestamp));
-        }
         if (cell.getPlant() != null) {
             data.set("plants", createPlantNode(cell.getPlant()));
         }
@@ -462,7 +491,9 @@ public class Simulation {
         if (cell.getWater() != null) {
             data.set("water", createWaterNode(cell.getWater()));
         }
-
+        if (cell.getAir() != null) {
+            data.set("air", createAirNode(cell.getAir(), currentTimestamp));
+        }
         output.set("output", data);
         return output;
     }
@@ -473,9 +504,8 @@ public class Simulation {
 
         ObjectNode output = MAPPER.createObjectNode();
         ArrayNode mapArray = MAPPER.createArrayNode();
-
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
+        for (int j = 0; j < map.getWidth(); j++) {
+            for (int i = 0; i < map.getHeight(); i++) {
                 Cell cell = map.getCell(i, j);
                 ObjectNode cellNode = MAPPER.createObjectNode();
 

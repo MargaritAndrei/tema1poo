@@ -12,7 +12,8 @@ public class GrasslandSoil extends Soil {
     @Override
     public double calculateQuality() {
         double score = (nitrogen * 1.3) + (organicMatter * 1.5) + (rootDensity * 0.8);
-        return Math.max(0, Math.min(100, score));
+        score = Math.max(0, Math.min(100, score));
+        return Entity.round(score);
     }
     @Override
     public double calculateBlockProbability() {

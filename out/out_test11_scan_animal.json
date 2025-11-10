@@ -1,1 +1,97 @@
-[ ]
+[ {
+  "command" : "startSimulation",
+  "message" : "Simulation has started.",
+  "timestamp" : 1
+}, {
+  "command" : "moveRobot",
+  "message" : "The robot has successfully moved to position (0, 1).",
+  "timestamp" : 3
+}, {
+  "command" : "moveRobot",
+  "message" : "The robot has successfully moved to position (0, 2).",
+  "timestamp" : 5
+}, {
+  "command" : "scanObject",
+  "message" : "ERROR: Object not found. Cannot perform action",
+  "timestamp" : 6
+}, {
+  "command" : "printEnvConditions",
+  "output" : {
+    "soil" : {
+      "type" : "GrasslandSoil",
+      "name" : "SteppeGrasslandSoil",
+      "mass" : 900.0,
+      "nitrogen" : 0.7,
+      "waterRetention" : 0.9,
+      "soilpH" : 7.4,
+      "organicMatter" : 0.6,
+      "soilQuality" : 11.41,
+      "rootDensity" : 12.0
+    },
+    "air" : {
+      "type" : "TropicalAir",
+      "name" : "Humid Tropical Air",
+      "mass" : 950000.0,
+      "humidity" : 85.0,
+      "temperature" : 30.0,
+      "oxygenLevel" : 21.0,
+      "airQuality" : 84.5,
+      "co2Level" : 0.04
+    }
+  },
+  "timestamp" : 7
+}, {
+  "command" : "getEnergyStatus",
+  "message" : "TerraBot has 4968 energy points left.",
+  "timestamp" : 8
+}, {
+  "command" : "moveRobot",
+  "message" : "The robot has successfully moved to position (0, 1).",
+  "timestamp" : 9
+}, {
+  "command" : "getEnergyStatus",
+  "message" : "TerraBot has 4967 energy points left.",
+  "timestamp" : 10
+}, {
+  "command" : "moveRobot",
+  "message" : "The robot has successfully moved to position (0, 2).",
+  "timestamp" : 11
+}, {
+  "command" : "printEnvConditions",
+  "output" : {
+    "soil" : {
+      "type" : "GrasslandSoil",
+      "name" : "SteppeGrasslandSoil",
+      "mass" : 900.0,
+      "nitrogen" : 0.7,
+      "waterRetention" : 0.9,
+      "soilpH" : 7.4,
+      "organicMatter" : 0.6,
+      "soilQuality" : 11.41,
+      "rootDensity" : 12.0
+    },
+    "air" : {
+      "type" : "TropicalAir",
+      "name" : "Humid Tropical Air",
+      "mass" : 950000.0,
+      "humidity" : 85.0,
+      "temperature" : 30.0,
+      "oxygenLevel" : 21.0,
+      "airQuality" : 84.5,
+      "co2Level" : 0.04
+    }
+  },
+  "timestamp" : 12
+}, {
+  "command" : "moveRobot",
+  "message" : "The robot has successfully moved to position (0, 1).",
+  "timestamp" : 13
+}, {
+  "command" : "moveRobot",
+  "message" : "The robot has successfully moved to position (0, 2).",
+  "timestamp" : 14
+}, {
+  "command" : "endSimulation",
+  "message" : "Simulation has ended.",
+  "timestamp" : 15
+} ]
