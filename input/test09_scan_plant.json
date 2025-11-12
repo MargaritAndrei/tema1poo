@@ -201,6 +201,7 @@
             "humidity": 25,
             "temperature": 35,
             "oxygenLevel": 18,
+            "dustParticles": 15.0,
             "sections": [
               { "x": 2, "y": 0 },
               { "x": 2, "y": 1 },

@@ -1,5 +1,7 @@
 package simulation.air;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CommandInput;
 import simulation.Entity;
 
 public class MountainAir extends Air {
@@ -13,11 +15,13 @@ public class MountainAir extends Air {
         return altitude;
     }
     @Override
-    public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
-        if ("peopleHiking".equalsIgnoreCase(weatherType)) {
-            this.weatherEffectValue = Entity.round(-value * 0.1);
+    public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
+        if (cmd.getType().equals("peopleHiking")) {
+            this.weatherEffectValue = Entity.round(-cmd.getNumberOfHikers() * 0.1);
             this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            return true;
         }
+        return false;
     }
     @Override
     public double airQualityScore(int currentTimestamp) {
@@ -32,5 +36,9 @@ public class MountainAir extends Air {
     @Override
     protected double maxScore() {
         return 78;
+    }
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("altitude", getAltitude());
     }
 }

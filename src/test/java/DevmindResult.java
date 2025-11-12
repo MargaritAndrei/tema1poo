@@ -1,9 +1,9 @@
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 
-@Getter
 public class DevmindResult {
     @JsonProperty
     private final String test;
@@ -38,9 +38,12 @@ public class DevmindResult {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.writeValueAsString(this);
-        }
-        catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             return e.getMessage();
         }
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

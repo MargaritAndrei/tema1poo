@@ -51,16 +51,16 @@ public class Main {
         Simulation currentSimulation = null;
         int simulationIndex = 0;
         for (CommandInput command : commands) {
-            int currentTimestamp = command.timestamp;
-            if (currentSimulation != null && !command.command.equals("startSimulation")) {
+            int currentTimestamp = command.getTimestamp();
+            if (currentSimulation != null && !command.getCommand().equals("startSimulation")) {
                 currentSimulation.evolveEnvironment(currentTimestamp);
             }
             ObjectNode commandOutput = MAPPER.createObjectNode();
-            commandOutput.put("command", command.command);
+            commandOutput.put("command", command.getCommand());
 
             ObjectNode resultData = null;
 
-            switch (command.command) {
+            switch (command.getCommand()) {
                 case "startSimulation":
                     if (currentSimulation != null) {
                         resultData = createErrorNode("ERROR: Simulation already started. Cannot perform action");
@@ -102,24 +102,6 @@ public class Main {
             commandOutput.put("timestamp", currentTimestamp);
             output.add(commandOutput);
         }
-
-        /*
-         * TODO Implement your function here
-         *
-         * How to add output to the output array?
-         * There are multiple ways to do this, here is one example:
-         *
-         *
-         * ObjectNode objectNode = MAPPER.createObjectNode();
-         * objectNode.put("field_name", "field_value");
-         *
-         * ArrayNode arrayNode = MAPPER.createArrayNode();
-         * arrayNode.add(objectNode);
-         *
-         * output.add(arrayNode);
-         * output.add(objectNode);
-         *
-         */
 
         File outputFile = new File(outputPath);
         outputFile.getParentFile().mkdirs();

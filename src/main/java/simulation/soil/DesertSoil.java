@@ -1,5 +1,6 @@
 package simulation.soil;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import simulation.Entity;
 
 public class DesertSoil extends Soil {
@@ -9,6 +10,9 @@ public class DesertSoil extends Soil {
         this.salinity = salinity;
     }
     protected double salinity;
+    public double getSalinity() {
+        return salinity;
+    }
     @Override
     public double calculateQuality() {
         double score = nitrogen * 0.5 + waterRetention * 0.3 - salinity * 2;
@@ -20,7 +24,8 @@ public class DesertSoil extends Soil {
         double score = (100 - waterRetention + salinity) / 100.0 * 100;
         return Entity.round(score);
     }
-    public double getSalinity() {
-        return salinity;
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("salinity", getSalinity());
     }
 }

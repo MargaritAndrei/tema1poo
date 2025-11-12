@@ -37,13 +37,7 @@
     "water" : {
       "type" : "lake",
       "name" : "ClearLake",
-      "mass" : 300.0,
-      "purity" : 94.0,
-      "salinity" : 0.4,
-      "turbidity" : 1.0,
-      "contaminantIndex" : 0.5,
-      "pH" : 7.2,
-      "isFrozen" : false
+      "mass" : 300.0
     },
     "air" : {
       "type" : "TropicalAir",

@@ -83,18 +83,13 @@
       "soilQuality" : 5.73,
       "leafLitter" : 0.25
     },
-    "plants" : {
-      "type" : "FloweringPlants",
-      "name" : "CrimsonRose",
-      "mass" : 0.5
-    },
     "air" : {
       "type" : "TropicalAir",
       "name" : "EquatorialWind",
       "mass" : 82000.0,
       "humidity" : 83.0,
       "temperature" : 26.0,
-      "oxygenLevel" : 387.3,
+      "oxygenLevel" : 111.3,
       "airQuality" : 100.0,
       "co2Level" : 0.05
     }
@@ -106,15 +101,15 @@
   "timestamp" : 63
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (1, 1).",
+  "message" : "The robot has successfully moved to position (0, 0).",
   "timestamp" : 64
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (1, 2).",
+  "message" : "ERROR: Not enough battery left. Cannot perform action",
   "timestamp" : 65
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (1, 1).",
+  "message" : "ERROR: Not enough battery left. Cannot perform action",
   "timestamp" : 66
 }, {
   "command" : "endSimulation",

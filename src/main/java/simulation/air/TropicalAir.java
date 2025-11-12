@@ -1,5 +1,7 @@
 package simulation.air;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CommandInput;
 import simulation.Entity;
 
 public class TropicalAir extends Air {
@@ -9,12 +11,17 @@ public class TropicalAir extends Air {
         super(name, mass, humidity, temperature, oxygenLevel);
         this.co2Level = co2Level;
     }
+    public double getCo2Level() {
+        return co2Level;
+    }
     @Override
-    public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
-        if ("rainfall".equalsIgnoreCase(weatherType)) {
-            this.weatherEffectValue = Entity.round(value * 0.3);
+    public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
+        if (cmd.getType().equals("rainfall")) {
+            this.weatherEffectValue = Entity.round(cmd.getRainfall() * 0.3);
             this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            return true;
         }
+        return false;
     }
     @Override
     public double airQualityScore(int currentTimestamp) {
@@ -30,7 +37,8 @@ public class TropicalAir extends Air {
         return 82;
     }
 
-    public double getCo2Level() {
-        return co2Level;
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("co2Level", getCo2Level());
     }
 }

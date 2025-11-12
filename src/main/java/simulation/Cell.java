@@ -70,7 +70,7 @@ public class Cell {
         sum += soil.calculateBlockProbability();
         sum += air.calculateToxicity(currentTimestamp);
         if (plant != null) {
-            sum += plant.plantPossibility();
+            sum += Entity.round(plant.plantPossibility() / 100.0);
             count++;
         }
         if (animal != null) {
@@ -94,6 +94,7 @@ public class Cell {
             air.addOxygen(plant.calculateOxygenProduction());
         }
         if (animal != null && animal.scanned) {
+            animal.produceFertilizer(soil);
             animal.tryToFeed(this);
         }
     }

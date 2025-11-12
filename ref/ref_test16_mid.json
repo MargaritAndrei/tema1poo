@@ -191,7 +191,7 @@
   "timestamp" : 15
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 2 energy points left.",
+  "message" : "TerraBot has 4 energy points left.",
   "timestamp" : 16
 }, {
   "command" : "moveRobot",
@@ -226,7 +226,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 0, 1 ],
-    "totalNrOfObjects" : 2,
+    "totalNrOfObjects" : 1,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {
@@ -251,7 +251,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 0, 2 ],
-    "totalNrOfObjects" : 1,
+    "totalNrOfObjects" : 0,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {
@@ -276,7 +276,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 0, 3 ],
-    "totalNrOfObjects" : 1,
+    "totalNrOfObjects" : 2,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {

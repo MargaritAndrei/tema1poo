@@ -1,5 +1,7 @@
 package simulation.air;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CommandInput;
 import simulation.Entity;
 
 public class PolarAir extends Air {
@@ -10,12 +12,13 @@ public class PolarAir extends Air {
         this.iceCrystalConcentration = iceCrystalConcentration;
     }
     @Override
-    public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
-        if ("polarStorm".equalsIgnoreCase(weatherType)) {
-            // Formula: normal_air_quality - (windSpeed * 0.2)
-            this.weatherEffectValue = Entity.round(-value * 0.2);
+    public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
+        if (cmd.getType().equals("polarStorm")) {
+            this.weatherEffectValue = Entity.round(-cmd.getWindSpeed() * 0.2);
             this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            return true;
         }
+        return false;
     }
     @Override
     public double airQualityScore(int currentTimestamp) {
@@ -30,8 +33,11 @@ public class PolarAir extends Air {
     protected double maxScore() {
         return 142;
     }
-
     public double getIceCrystalConcentration() {
         return iceCrystalConcentration;
+    }
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("iceCrystalConcentration", getIceCrystalConcentration());
     }
 }

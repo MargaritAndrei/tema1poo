@@ -1,20 +1,28 @@
 package fileio;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-public class SoilInput {
-    public String type;
-    public String name;
-    public double mass;
-    public double nitrogen;
-    public double waterRetention;
-    public double soilpH;
-    public double organicMatter;
-    public double leafLitter;
-    public double waterLogging;
-    public double permafrostDepth;
-    public double rootDensity;
-    public double salinity;
-    public List<PairInput> sections;
+@Data
+@NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public final class SoilInput {
+    private String type;
+    private String name;
+    private double mass;
+    private double nitrogen;
+    private double waterRetention;
+    private double soilpH;
+    private double organicMatter;
+    private double leafLitter;
+    private double waterLogging;
+    private double permafrostDepth;
+    private double rootDensity;
+    private double salinity;
+    private List<PairInput> sections;
 }
 

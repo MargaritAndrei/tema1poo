@@ -29,6 +29,7 @@
             "waterRetention": 0.75,
             "soilpH": 6.0,
             "organicMatter": 0.55,
+            "waterLogging": 0.3,
             "sections": [
               { "x": 0, "y": 1 },
               { "x": 1, "y": 1 },
@@ -44,6 +45,7 @@
             "waterRetention": 0.08,
             "soilpH": 8.5,
             "organicMatter": 0.05,
+            "salinity": 0.05,
             "sections": [
               { "x": 0, "y": 2 },
               { "x": 1, "y": 2 },
@@ -59,6 +61,7 @@
             "waterRetention": 0.3,
             "soilpH": 7.0,
             "organicMatter": 0.15,
+            "rootDensity": 12.0,
             "sections": [
               { "x": 0, "y": 3 },
               { "x": 1, "y": 3 },

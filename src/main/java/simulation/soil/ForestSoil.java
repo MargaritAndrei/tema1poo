@@ -1,5 +1,6 @@
 package simulation.soil;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import simulation.Entity;
 
 public class ForestSoil extends Soil {
@@ -9,6 +10,9 @@ public class ForestSoil extends Soil {
         this.leafLitter = leafLitter;
     }
     protected double leafLitter;
+    public double getLeafLitter() {
+        return leafLitter;
+    }
     @Override
     public double calculateQuality() {
         double score = nitrogen * 1.2 + organicMatter * 2 + waterRetention * 1.5
@@ -21,7 +25,8 @@ public class ForestSoil extends Soil {
         double score = (waterRetention * 0.6 + leafLitter * 0.4) / 80.0 * 100;
         return Entity.round(score);
     }
-    public double getLeafLitter() {
-        return leafLitter;
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("leafLitter", getLeafLitter());
     }
 }

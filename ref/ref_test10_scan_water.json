@@ -27,13 +27,7 @@
     "water" : {
       "type" : "pond",
       "name" : "SmallPond",
-      "mass" : 30.0,
-      "purity" : 85.0,
-      "salinity" : 0.1,
-      "turbidity" : 2.0,
-      "contaminantIndex" : 0.5,
-      "pH" : 6.6,
-      "isFrozen" : true
+      "mass" : 30.0
     },
     "air" : {
       "type" : "TropicalAir",
@@ -49,7 +43,7 @@
   "timestamp" : 4
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 4992 energy points left.",
+  "message" : "TerraBot has 4990 energy points left.",
   "timestamp" : 5
 }, {
   "command" : "moveRobot",
@@ -76,13 +70,7 @@
     "water" : {
       "type" : "pond",
       "name" : "SmallPond",
-      "mass" : 30.0,
-      "purity" : 85.0,
-      "salinity" : 0.1,
-      "turbidity" : 2.0,
-      "contaminantIndex" : 0.5,
-      "pH" : 6.6,
-      "isFrozen" : true
+      "mass" : 30.0
     },
     "air" : {
       "type" : "TropicalAir",
@@ -102,7 +90,7 @@
   "timestamp" : 9
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 4947 energy points left.",
+  "message" : "TerraBot has 4941 energy points left.",
   "timestamp" : 10
 }, {
   "command" : "moveRobot",
@@ -133,13 +121,7 @@
     "water" : {
       "type" : "pond",
       "name" : "SmallPond",
-      "mass" : 30.0,
-      "purity" : 85.0,
-      "salinity" : 0.1,
-      "turbidity" : 2.0,
-      "contaminantIndex" : 0.5,
-      "pH" : 6.6,
-      "isFrozen" : true
+      "mass" : 30.0
     },
     "air" : {
       "type" : "TropicalAir",

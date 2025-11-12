@@ -93,40 +93,34 @@
   "timestamp" : 9
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (0, 2).",
+  "message" : "The robot has successfully moved to position (0, 0).",
   "timestamp" : 10
 }, {
   "command" : "scanObject",
-  "message" : "The scanned object is an animal.",
+  "message" : "ERROR: Object not found. Cannot perform action",
   "timestamp" : 11
 }, {
   "command" : "learnFact",
-  "message" : "The fact has been successfully saved in the database.",
+  "message" : "ERROR: Subject not yet saved. Cannot perform action",
   "timestamp" : 12
 }, {
   "command" : "printEnvConditions",
   "output" : {
     "soil" : {
-      "type" : "SwampSoil",
-      "name" : "WetPeat",
-      "mass" : 1050.0,
-      "nitrogen" : 1.5,
+      "type" : "ForestSoil",
+      "name" : "LightForestSoil",
+      "mass" : 900.0,
+      "nitrogen" : 2.6,
       "waterRetention" : 0.8,
-      "soilpH" : 6.2,
-      "organicMatter" : 0.6,
-      "soilQuality" : 0.0,
-      "waterLogging" : 0.9
+      "soilpH" : 5.3,
+      "organicMatter" : 0.4,
+      "soilQuality" : 5.18,
+      "leafLitter" : 0.2
     },
-    "water" : {
-      "type" : "lake",
-      "name" : "ClearLake",
-      "mass" : 300.0,
-      "purity" : 94.0,
-      "salinity" : 0.4,
-      "turbidity" : 1.0,
-      "contaminantIndex" : 0.5,
-      "pH" : 7.2,
-      "isFrozen" : false
+    "plants" : {
+      "type" : "FloweringPlants",
+      "name" : "Rose",
+      "mass" : 0.5
     },
     "air" : {
       "type" : "TropicalAir",
@@ -134,40 +128,34 @@
       "mass" : 80000.0,
       "humidity" : 80.0,
       "temperature" : 25.0,
-      "oxygenLevel" : 21.0,
-      "airQuality" : 82.0,
+      "oxygenLevel" : 92.1,
+      "airQuality" : 100.0,
       "co2Level" : 0.06
     }
   },
   "timestamp" : 13
 }, {
   "command" : "improveEnvironment",
-  "message" : "The soil was successfully fertilized using Deer",
+  "message" : "ERROR: Subject not yet saved. Cannot perform action",
   "timestamp" : 14
 }, {
   "command" : "printEnvConditions",
   "output" : {
     "soil" : {
-      "type" : "SwampSoil",
-      "name" : "WetPeat",
-      "mass" : 1050.0,
-      "nitrogen" : 1.5,
+      "type" : "ForestSoil",
+      "name" : "LightForestSoil",
+      "mass" : 900.0,
+      "nitrogen" : 2.6,
       "waterRetention" : 0.8,
-      "soilpH" : 6.2,
-      "organicMatter" : 0.9,
-      "soilQuality" : 0.0,
-      "waterLogging" : 0.9
+      "soilpH" : 5.3,
+      "organicMatter" : 0.4,
+      "soilQuality" : 5.18,
+      "leafLitter" : 0.2
     },
-    "water" : {
-      "type" : "lake",
-      "name" : "ClearLake",
-      "mass" : 300.0,
-      "purity" : 94.0,
-      "salinity" : 0.4,
-      "turbidity" : 1.0,
-      "contaminantIndex" : 0.5,
-      "pH" : 7.2,
-      "isFrozen" : false
+    "plants" : {
+      "type" : "FloweringPlants",
+      "name" : "Rose",
+      "mass" : 0.5
     },
     "air" : {
       "type" : "TropicalAir",
@@ -175,15 +163,15 @@
       "mass" : 80000.0,
       "humidity" : 80.0,
       "temperature" : 25.0,
-      "oxygenLevel" : 21.0,
-      "airQuality" : 82.0,
+      "oxygenLevel" : 104.9,
+      "airQuality" : 100.0,
       "co2Level" : 0.06
     }
   },
   "timestamp" : 15
 }, {
   "command" : "moveRobot",
-  "message" : "ERROR: Not enough battery left. Cannot perform action",
+  "message" : "The robot has successfully moved to position (0, 1).",
   "timestamp" : 16
 }, {
   "command" : "scanObject",
@@ -195,7 +183,7 @@
   "timestamp" : 18
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 28 energy points left.",
+  "message" : "TerraBot has 20 energy points left.",
   "timestamp" : 19
 }, {
   "command" : "endSimulation",

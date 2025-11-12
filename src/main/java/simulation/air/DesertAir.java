@@ -1,39 +1,64 @@
 package simulation.air;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CommandInput;
 import simulation.Entity;
 
 public class DesertAir extends Air {
     protected double dustParticles;
+    protected boolean desertStorm;
+
     public DesertAir(String name, double mass, double humidity,
                      double temperature, double oxygenLevel, double dustParticles) {
         super(name, mass, humidity, temperature, oxygenLevel);
         this.dustParticles = dustParticles;
+        this.desertStorm = false;
     }
+
     public double getDustParticles() {
         return dustParticles;
     }
-    @Override
-    public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
-        if ("desertStorm".equalsIgnoreCase(weatherType)) {
-            // Formula: normal_air_quality - (desertStorm ? 30 : 0)
-            // Presupunem că 'value' este 30 dacă e furtună, 0 altfel
-            this.weatherEffectValue = Entity.round(-value);
-            this.weatherEffectEndTimestamp = currentTimestamp + 2;
-        }
+
+    public boolean isDesertStorm() {
+        return desertStorm;
     }
+
+    @Override
+    public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
+        if (cmd.getType().equals("desertStorm")) {
+            desertStorm = cmd.isDesertStorm();
+
+            double penalty = desertStorm ? 30.0 : 0.0;
+            weatherEffectValue = Entity.round(-penalty);
+            weatherEffectEndTimestamp = currentTimestamp + 2;
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public double airQualityScore(int currentTimestamp) {
+        if (currentTimestamp >= weatherEffectEndTimestamp) {
+            desertStorm = false;
+        }
+
         double score = (oxygenLevel * 2) - (dustParticles * 0.2) - (temperature * 0.3);
 
-        if (currentTimestamp < this.weatherEffectEndTimestamp) {
-            score += this.weatherEffectValue;
+        if (currentTimestamp < weatherEffectEndTimestamp) {
+            score += weatherEffectValue;
         }
 
         double normalizeScore = Math.max(0, Math.min(100, score));
         return Entity.round(normalizeScore);
     }
+
     @Override
     protected double maxScore() {
         return 65;
+    }
+
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("desertStorm", desertStorm);
     }
 }

@@ -43,6 +43,8 @@ public class TestRunner {
 
     private static final List<DevmindResult> devmindResults = new ArrayList<>();
 
+    private static final String PASSED = "PASSED";
+
     public static Stream<Arguments> data() {
         return Stream.of(
                 Arguments.of("test01", "input/test01_initialize_entities.json", "out/out_test01_initialize_entities.json", "ref/ref_test01_initialize_entities.json", 3),
@@ -60,7 +62,12 @@ public class TestRunner {
                 Arguments.of("test13", "input/test13_learn_fact.json", "out/out_test13_learn_fact.json", "ref/ref_test13_learn_fact.json", 4),
                 Arguments.of("test14", "input/test14_improve_environment.json", "out/out_test14_improve_environment.json", "ref/ref_test14_improve_environment.json", 5),
                 Arguments.of("test15", "input/test15_improve_environment_errors.json", "out/out_test15_improve_environment_errors.json", "ref/ref_test15_improve_environment_errors.json", 2),
-                Arguments.of("test16", "input/test16_mid.json", "out/out_test16_mid.json", "ref/ref_test16_mid.json", 6)
+                Arguments.of("test16", "input/test16_mid.json", "out/out_test16_mid.json", "ref/ref_test16_mid.json", 6),
+                Arguments.of("test17", "input/test17_multiple_simulations.json", "out/out_test17_multiple_simulations.json", "ref/ref_test17_multiple_simulations.json", 3),
+                Arguments.of("test18", "input/test18_multiple_simulations_error.json", "out/out_test18_multiple_simulations_error.json", "ref/ref_test18_multiple_simulations_error.json", 2),
+                Arguments.of("test19", "input/test19_complex_simple.json", "out/out_test19_complex_simple.json", "ref/ref_test19_complex_simple.json", 6),
+                Arguments.of("test20", "input/test20_complex_errors.json", "out/out_test20_complex_errors.json", "ref/ref_test20_complex_errors.json", 6),
+                Arguments.of("test21", "input/test21_complex_combined.json", "out/out_test21_complex_combined.json", "ref/ref_test21_complex_combined.json", 8)
         );
     }
 
@@ -86,7 +93,7 @@ public class TestRunner {
                 inputJson,
                 outputJson,
                 refJson,
-                "PASS",
+                PASSED,
                 points
             ));
         } catch (AssertionError e) {
@@ -122,6 +129,7 @@ public class TestRunner {
         int errorCount = checker.process(files);
         checker.destroy();
 
+        String checkStyleErrors = checkstyleAuditListener.toString();
         try {
             assertThat(errorCount).isLessThanOrEqualTo(CheckerConstants.MAXIMUM_ERROR_CHECKSTYLE);
             devmindResults.add(new DevmindResult(
@@ -129,9 +137,10 @@ public class TestRunner {
                     "",
                     "",
                     errorCount,
-                    "PASS",
+                    PASSED,
                     CheckerConstants.CHECKSTYLE_POINTS
             ));
+            System.out.println(checkStyleErrors);
         }
         catch (AssertionError e) {
             devmindResults.add(new DevmindErrorResult(
@@ -142,8 +151,20 @@ public class TestRunner {
                     10,
                     e.getMessage()
             ));
-            throw new CheckstyleException(checkstyleAuditListener.toString());
+            throw new CheckstyleException(checkStyleErrors);
         }
+    }
+
+    private boolean hasNonDeveloperAuthor(RevCommit commit) {
+        List<String> exceptedAuthors = List.of(
+            "david.capragiu@gmail.com",
+            "alina.tudorache872@gmail.com",
+            "63539529+Dievaid@users.noreply.github.com",
+            "69516563+alina-t-872@users.noreply.github.com"
+        );
+
+        String userEmail = commit.getAuthorIdent().getEmailAddress();
+        return !exceptedAuthors.contains(userEmail);
     }
 
     @Test
@@ -152,6 +173,7 @@ public class TestRunner {
 
         try (Git git = Git.open(repoDirectory)) {
             List<RevCommit> commits = StreamSupport.stream(git.log().call().spliterator(), false)
+                    .filter(this::hasNonDeveloperAuthor)
                     .sorted(Comparator.comparing(RevCommit::getCommitTime))
                     .toList();
 
@@ -164,7 +186,7 @@ public class TestRunner {
                     "",
                     "",
                     "",
-                    "PASS",
+                    PASSED,
                     CheckerConstants.GIT_POINTS
             ));
         } catch (IOException | AssertionError | GitAPIException e) {
@@ -198,7 +220,7 @@ public class TestRunner {
         System.out.println("Total: " + TestCaseWatcher.totalPoints + "/100");
 
         boolean allPassed = devmindResults.stream()
-                .allMatch(result -> "PASS".equals(result.getStatus()));
+                .allMatch(result -> PASSED.equals(result.getStatus()));
 
         if (allPassed) {
             System.out.println("Yey, ai reusit sa-l ajuti cu succes pe TerraBot sa descopere planeta \uD83D\uDE0A\"");

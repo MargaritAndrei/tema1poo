@@ -1,5 +1,6 @@
 package simulation.soil;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import simulation.Entity;
 import simulation.water.Water;
 import simulation.plant.Plant;
@@ -21,6 +22,7 @@ public abstract class Soil extends Entity {
     protected int lastWaterAbsorptionTimestamp;
     public abstract double calculateQuality();
     public abstract double calculateBlockProbability();
+    public abstract void addSpecificFieldsToJson(ObjectNode node);
     public double getNitrogen() {
         return nitrogen;
     }

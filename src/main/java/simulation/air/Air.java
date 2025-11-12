@@ -1,5 +1,7 @@
 package simulation.air;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CommandInput;
 import simulation.Entity;
 
 public abstract class Air extends Entity {
@@ -27,8 +29,8 @@ public abstract class Air extends Entity {
         return oxygenLevel;
     }
     public double calculateToxicity(int currentTimestamp) {
-        double qualityScore = this.airQualityScore(currentTimestamp);
-        double maxScore = this.maxScore();
+        double qualityScore = airQualityScore(currentTimestamp);
+        double maxScore = maxScore();
         double normalizedQuality = Math.max(0, Math.min(100, qualityScore));
         double roundedQuality = Entity.round(normalizedQuality);
         double toxicityAQ = 100 * (1 - roundedQuality / maxScore);
@@ -42,10 +44,12 @@ public abstract class Air extends Entity {
         this.humidity += amount;
         this.humidity = Entity.round(this.humidity);
     }
-    public abstract void applyWeatherChange(String weatherType, double value, int currentTimestamp);
+    public abstract boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp);
     public abstract double airQualityScore(int currentTimestamp);
     protected abstract double maxScore();
     public double getmaxScore() {
         return maxScore();
     }
+    public abstract void addSpecificFieldsToJson(ObjectNode node);
+
 }

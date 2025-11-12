@@ -64,8 +64,8 @@
       "waterRetention" : 0.75,
       "soilpH" : 6.0,
       "organicMatter" : 0.55,
-      "soilQuality" : 3.63,
-      "waterLogging" : 0.0
+      "soilQuality" : 2.13,
+      "waterLogging" : 0.3
     },
     "plants" : {
       "type" : "GymnospermsPlants",
@@ -75,13 +75,7 @@
     "water" : {
       "type" : "river",
       "name" : "ClearRiver",
-      "mass" : 300.0,
-      "purity" : 92.0,
-      "salinity" : 0.05,
-      "turbidity" : 1.2,
-      "contaminantIndex" : 0.2,
-      "pH" : 7.4,
-      "isFrozen" : false
+      "mass" : 300.0
     },
     "air" : {
       "type" : "MountainAir",

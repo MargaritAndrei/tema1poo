@@ -48,7 +48,7 @@
   "timestamp" : 4
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 4992 energy points left.",
+  "message" : "TerraBot has 4990 energy points left.",
   "timestamp" : 5
 }, {
   "command" : "moveRobot",
@@ -100,7 +100,7 @@
   "timestamp" : 9
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 4955 energy points left.",
+  "message" : "TerraBot has 4941 energy points left.",
   "timestamp" : 10
 }, {
   "command" : "moveRobot",

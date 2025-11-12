@@ -1,13 +1,21 @@
 package fileio;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TerritorySectionParamsInput {
-    public List<SoilInput> soil;
-    public List<PlantInput> plants;
-    public List<AnimalInput> animals;
-    public List<WaterInput> water;
-    public List<AirInput> air;
+    private List<SoilInput> soil;
+    private List<PlantInput> plants;
+    private List<AnimalInput> animals;
+    private List<WaterInput> water;
+    private List<AirInput> air;
 }
 
 

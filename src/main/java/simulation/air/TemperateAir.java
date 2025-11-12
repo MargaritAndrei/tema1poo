@@ -1,5 +1,7 @@
 package simulation.air;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import fileio.CommandInput;
 import simulation.Entity;
 
 public class TemperateAir extends Air {
@@ -13,13 +15,14 @@ public class TemperateAir extends Air {
         return pollenLevel;
     }
     @Override
-    public void applyWeatherChange(String weatherType, double value, int currentTimestamp) {
-        if ("newSeason".equalsIgnoreCase(weatherType)) {
-            // Formula: normal_air_quality - seasonPenalty
-            // Presupunem că 'value' este penalizarea (15 sau 0)
-            this.weatherEffectValue = Entity.round(-value);
+    public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
+        if (cmd.getType().equals("newSeason")) {
+            double penalty = cmd.getSeason().equalsIgnoreCase("Spring") ? 15.0 : 0.0;
+            this.weatherEffectValue = Entity.round(-penalty);
             this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            return true;
         }
+        return false;
     }
     @Override
     public double airQualityScore(int currentTimestamp) {
@@ -34,5 +37,9 @@ public class TemperateAir extends Air {
     @Override
     protected double maxScore() {
         return 84;
+    }
+    @Override
+    public void addSpecificFieldsToJson(ObjectNode node) {
+        node.put("pollenLevel", getPollenLevel());
     }
 }

@@ -9,16 +9,18 @@ import simulation.soil.Soil;
 import simulation.water.Water;
 
 public abstract class Animal extends Entity {
+    protected AnimalState state;
+    public boolean scanned;
+    protected int lastMoveTimestamp;
+    protected int x, y;
+    private double fertilizerToProduce;
     public Animal(String name, double mass) {
         super(name, mass);
         state = AnimalState.hungry;
         scanned = false;
         lastMoveTimestamp = 0;
+        fertilizerToProduce = 0;
     }
-    protected AnimalState state;
-    public boolean scanned;
-    protected int lastMoveTimestamp;
-    protected int x, y;
     protected abstract boolean isPredator();
     public abstract double animalPossibility();
     public int getX() {
@@ -32,6 +34,10 @@ public abstract class Animal extends Entity {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public void produceFertilizer(Soil soil) {
+        soil.addOrganicMatter(fertilizerToProduce);
+        fertilizerToProduce = 0;
     }
     public void updateState(Air currentAir, int currentTimestamp) {
         double toxicThreshold = 0.8 * currentAir.getmaxScore();
@@ -76,6 +82,7 @@ public abstract class Animal extends Entity {
                 return candidateCell;
             }
         }
+        bestWaterQuality = -1.0;
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
@@ -106,13 +113,12 @@ public abstract class Animal extends Entity {
             return;
         }
         state = AnimalState.well_fed;
-        Soil soil = currentCell.getSoil();
         Water water = currentCell.getWater();
         Plant plant = currentCell.getPlant();
         Animal prey = currentCell.getAnimal();
         if (isPredator() && prey != null) {
             setMass(getMass() + prey.getMass());
-            soil.addOrganicMatter(0.5);
+            fertilizerToProduce = 0.5;
             currentCell.setAnimal(null);
             return;
         }
@@ -123,27 +129,34 @@ public abstract class Animal extends Entity {
             double intakeRate = 0.08;
             double waterToDrink = Math.min(getMass() * intakeRate, water.getMass());
             water.setMass(water.getMass() - waterToDrink);
+            if (water.getMass() <= 0) {
+                currentCell.setWater(null);
+            }
             setMass(getMass() + waterToDrink + plant.getMass());
-            soil.addOrganicMatter(0.8);
+            fertilizerToProduce = 0.8;
             return;
         }
         if (plantScanned) {
             currentCell.setPlant(null);
             setMass(getMass() + plant.getMass());
-            soil.addOrganicMatter(0.5);
+            fertilizerToProduce = 0.5;
             return;
         }
         if (waterScanned) {
             double intakeRate = 0.08;
             double waterToDrink = Math.min(getMass() * intakeRate, water.getMass());
             water.setMass(water.getMass() - waterToDrink);
+            if (water.getMass() <= 0) {
+                currentCell.setWater(null);
+            }
             setMass(getMass() + waterToDrink);
-            soil.addOrganicMatter(0.5);
+            fertilizerToProduce = 0.5;
             return;
         }
         state = AnimalState.hungry;
     }
     public double calculateAttackRisk() {
-        return (100 - animalPossibility()) / 10.0;
+        double score = (100 - animalPossibility()) / 10.0;
+        return Entity.round(score);
     }
 }

@@ -54,7 +54,6 @@ public class TerraBot {
         }
         int dx[] = {-1, 0, 1, 0};
         int dy[] = {0, 1, 0, -1};
-        Cell bestCell = null;
         int bestX = x;
         int bestY = y;
         int bestScore = Integer.MAX_VALUE;

@@ -1,7 +1,15 @@
 package fileio;
 
-public class SimulationInput {
-    public String territoryDim;
-    public int energyPoints;
-    public TerritorySectionParamsInput territorySectionParams;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public final class SimulationInput {
+    private String territoryDim;
+    private int energyPoints;
+    private TerritorySectionParamsInput territorySectionParams;
 }

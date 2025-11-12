@@ -20,7 +20,7 @@
   "timestamp" : 5
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 132 energy points left.",
+  "message" : "TerraBot has 130 energy points left.",
   "timestamp" : 6
 }, {
   "command" : "printEnvConditions",
@@ -44,13 +44,7 @@
     "water" : {
       "type" : "river",
       "name" : "SilverStream",
-      "mass" : 500.0,
-      "purity" : 70.0,
-      "salinity" : 0.1,
-      "turbidity" : 3.0,
-      "contaminantIndex" : 1.0,
-      "pH" : 7.0,
-      "isFrozen" : false
+      "mass" : 500.0
     },
     "air" : {
       "type" : "DesertAir",
@@ -59,8 +53,8 @@
       "humidity" : 60.0,
       "temperature" : 15.0,
       "oxygenLevel" : 20.0,
-      "airQuality" : 35.5,
-      "desertStorm" : true
+      "airQuality" : 33.0,
+      "desertStorm" : false
     }
   },
   "timestamp" : 7
@@ -70,7 +64,7 @@
   "timestamp" : 8
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 128 energy points left.",
+  "message" : "TerraBot has 126 energy points left.",
   "timestamp" : 9
 }, {
   "command" : "rechargeBattery",
@@ -106,13 +100,7 @@
     "water" : {
       "type" : "river",
       "name" : "SilverStream",
-      "mass" : 500.0,
-      "purity" : 70.0,
-      "salinity" : 0.1,
-      "turbidity" : 3.0,
-      "contaminantIndex" : 1.0,
-      "pH" : 7.0,
-      "isFrozen" : false
+      "mass" : 500.0
     },
     "air" : {
       "type" : "DesertAir",
@@ -121,8 +109,8 @@
       "humidity" : 60.0,
       "temperature" : 15.0,
       "oxygenLevel" : 20.0,
-      "airQuality" : 35.5,
-      "desertStorm" : true
+      "airQuality" : 33.0,
+      "desertStorm" : false
     }
   },
   "timestamp" : 22

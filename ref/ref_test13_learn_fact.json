@@ -24,7 +24,7 @@
   "timestamp" : 6
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 31 energy points left.",
+  "message" : "TerraBot has 30 energy points left.",
   "timestamp" : 7
 }, {
   "command" : "learnFact",
@@ -48,7 +48,7 @@
   "timestamp" : 12
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 12 energy points left.",
+  "message" : "TerraBot has 10 energy points left.",
   "timestamp" : 13
 }, {
   "command" : "learnFact",
@@ -56,16 +56,16 @@
   "timestamp" : 14
 }, {
   "command" : "getEnergyStatus",
-  "message" : "TerraBot has 10 energy points left.",
+  "message" : "TerraBot has 8 energy points left.",
   "timestamp" : 15
 }, {
   "command" : "printKnowledgeBase",
   "output" : [ {
-    "topic" : "GreenAlgae",
-    "facts" : [ "Characteristic of GreenAlgae", "Method to plant GreenAlgae" ]
-  }, {
     "topic" : "Tulip",
     "facts" : [ "Method to plant Tulip", "Characteristic of Tulip" ]
+  }, {
+    "topic" : "GreenAlgae",
+    "facts" : [ "Characteristic of GreenAlgae", "Method to plant GreenAlgae" ]
   } ],
   "timestamp" : 16
 }, {
