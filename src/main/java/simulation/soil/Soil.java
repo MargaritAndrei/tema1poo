@@ -13,7 +13,6 @@ public abstract class Soil extends Entity {
         this.waterRetention = waterRetention;
         this.soilpH = soilpH;
         this.organicMatter = organicMatter;
-        lastWaterAbsorptionTimestamp = 0;
     }
     protected double nitrogen;
     protected double waterRetention;
@@ -35,6 +34,9 @@ public abstract class Soil extends Entity {
     public double getOrganicMatter() {
         return organicMatter;
     }
+    public void setScanTimestamp(int timestamp) {
+        lastWaterAbsorptionTimestamp = timestamp;
+    }
     public void tryToAbsorbWater(Water water, int currentTimestamp) {
         if (water != null && water.scanned) {
             if (currentTimestamp - lastWaterAbsorptionTimestamp >= 2) {
@@ -46,7 +48,8 @@ public abstract class Soil extends Entity {
     }
     public void addOrganicMatter(double amount) {
         organicMatter += amount;
-        organicMatter = Entity.round(organicMatter);
+        double normalized = Math.max(0, Math.min(100, organicMatter));
+        organicMatter = Entity.round(normalized);
     }
     public void tryToGrowPlant(Plant plant) {
         if (plant != null && plant.scanned) {
@@ -55,6 +58,7 @@ public abstract class Soil extends Entity {
     }
     public void addWaterRetention(double amount) {
         waterRetention += amount;
-        waterRetention = Entity.round(waterRetention);
+        double normalized = Math.max(0, Math.min(100, waterRetention));
+        waterRetention = Entity.round(normalized);
     }
 }

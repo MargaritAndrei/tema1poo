@@ -35,6 +35,9 @@ public abstract class Animal extends Entity {
     public void setY(int y) {
         this.y = y;
     }
+    public void setLastMoveTimestamp(int timestamp) {
+        lastMoveTimestamp = timestamp;
+    }
     public void produceFertilizer(Soil soil) {
         soil.addOrganicMatter(fertilizerToProduce);
         fertilizerToProduce = 0;

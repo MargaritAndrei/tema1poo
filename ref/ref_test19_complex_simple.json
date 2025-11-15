@@ -116,7 +116,7 @@
       "humidity" : 62.0,
       "temperature" : 19.0,
       "oxygenLevel" : 45.8,
-      "airQuality" : 100.0,
+      "airQuality" : 85.0,
       "pollenLevel" : 8.5
     }
   },
@@ -538,8 +538,8 @@
       "humidity" : 15.0,
       "temperature" : 38.0,
       "oxygenLevel" : 19.0,
-      "airQuality" : 22.2,
-      "desertStorm" : false
+      "airQuality" : 0.0,
+      "desertStorm" : true
     }
   },
   "timestamp" : 40

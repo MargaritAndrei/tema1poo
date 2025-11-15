@@ -12,7 +12,7 @@
   "timestamp" : 3
 }, {
   "command" : "scanObject",
-  "message" : "ERROR: Object not found. Cannot perform action",
+  "message" : "The scanned object is an animal.",
   "timestamp" : 4
 }, {
   "command" : "printEnvConditions",
@@ -64,7 +64,7 @@
   "timestamp" : 8
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (0, 0).",
+  "message" : "The robot has successfully moved to position (1, 1).",
   "timestamp" : 9
 }, {
   "command" : "printEnvConditions",
@@ -85,11 +85,6 @@
       "name" : "Tulip",
       "mass" : 0.5
     },
-    "animals" : {
-      "type" : "Omnivores",
-      "name" : "Bear",
-      "mass" : 300.0
-    },
     "air" : {
       "type" : "TropicalAir",
       "name" : "Humid Tropical Air",
@@ -104,11 +99,11 @@
   "timestamp" : 10
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (0, 1).",
+  "message" : "The robot has successfully moved to position (1, 0).",
   "timestamp" : 11
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (0, 0).",
+  "message" : "The robot has successfully moved to position (1, 1).",
   "timestamp" : 12
 }, {
   "command" : "endSimulation",

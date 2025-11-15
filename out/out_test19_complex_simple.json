@@ -703,10 +703,10 @@
       "name" : "RichForest",
       "mass" : 950.0,
       "nitrogen" : 2.8,
-      "waterRetention" : 1.12,
+      "waterRetention" : 1.02,
       "soilpH" : 6.5,
       "organicMatter" : 0.45,
-      "soilQuality" : 6.02,
+      "soilQuality" : 5.87,
       "leafLitter" : 0.28
     },
     "water" : {
@@ -718,10 +718,10 @@
       "type" : "TropicalAir",
       "name" : "Humid Tropical Air",
       "mass" : 960000.0,
-      "humidity" : 82.6,
+      "humidity" : 82.5,
       "temperature" : 28.0,
       "oxygenLevel" : 20.0,
-      "airQuality" : 81.08,
+      "airQuality" : 81.03,
       "co2Level" : 22.38
     }
   },
@@ -742,10 +742,10 @@
       "name" : "RichForest",
       "mass" : 950.0,
       "nitrogen" : 2.8,
-      "waterRetention" : 1.32,
+      "waterRetention" : 1.22,
       "soilpH" : 6.5,
       "organicMatter" : 0.45,
-      "soilQuality" : 6.32,
+      "soilQuality" : 6.17,
       "leafLitter" : 0.28
     },
     "water" : {
@@ -757,10 +757,10 @@
       "type" : "TropicalAir",
       "name" : "Humid Tropical Air",
       "mass" : 960000.0,
-      "humidity" : 82.8,
+      "humidity" : 82.7,
       "temperature" : 28.0,
       "oxygenLevel" : 20.0,
-      "airQuality" : 81.18,
+      "airQuality" : 81.13,
       "co2Level" : 22.38
     }
   },
@@ -773,10 +773,10 @@
       "name" : "RichForest",
       "mass" : 950.0,
       "nitrogen" : 2.8,
-      "waterRetention" : 1.32,
+      "waterRetention" : 1.22,
       "soilpH" : 6.5,
       "organicMatter" : 0.45,
-      "soilQuality" : 6.32,
+      "soilQuality" : 6.17,
       "leafLitter" : 0.28
     },
     "water" : {
@@ -788,10 +788,10 @@
       "type" : "TropicalAir",
       "name" : "Humid Tropical Air",
       "mass" : 960000.0,
-      "humidity" : 82.8,
+      "humidity" : 82.7,
       "temperature" : 28.0,
       "oxygenLevel" : 20.0,
-      "airQuality" : 81.18,
+      "airQuality" : 81.13,
       "co2Level" : 22.38
     }
   },

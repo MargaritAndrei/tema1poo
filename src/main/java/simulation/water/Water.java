@@ -19,7 +19,6 @@ public class Water extends Entity {
                  double purity, double turbidity, double contaminantIndex, boolean isFrozen) {
         super(name, mass);
         scanned = false;
-        lastInteractionTimestamp = 0;
         this.type = type;
         this.salinity = salinity;
         this.ph = ph;
@@ -45,6 +44,9 @@ public class Water extends Entity {
     }
     public double getContaminantIndex() {
         return  contaminantIndex;
+    }
+    public void setScanTimestamp(int timestamp) {
+        lastInteractionTimestamp = timestamp ;
     }
     public void tryToInteractWithAir(Air air, int currentTimestamp) {
         if (currentTimestamp - lastInteractionTimestamp >= 2) {

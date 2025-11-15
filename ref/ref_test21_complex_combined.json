@@ -230,7 +230,7 @@
       "humidity" : 84.0,
       "temperature" : 28.0,
       "oxygenLevel" : 21.3,
-      "airQuality" : 84.6,
+      "airQuality" : 88.8,
       "co2Level" : 0.05
     }
   },
@@ -707,7 +707,7 @@
       "humidity" : 80.0,
       "temperature" : 27.0,
       "oxygenLevel" : 21.0,
-      "airQuality" : 82.0,
+      "airQuality" : 87.7,
       "co2Level" : 0.05
     }
   },
@@ -891,7 +891,7 @@
       "humidity" : 60.0,
       "temperature" : 15.0,
       "oxygenLevel" : 37.5,
-      "airQuality" : 100.0,
+      "airQuality" : 85.0,
       "pollenLevel" : 14.0
     }
   },

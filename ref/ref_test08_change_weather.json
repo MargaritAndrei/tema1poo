@@ -109,8 +109,8 @@
       "humidity" : 60.0,
       "temperature" : 15.0,
       "oxygenLevel" : 20.0,
-      "airQuality" : 33.0,
-      "desertStorm" : false
+      "airQuality" : 3.0,
+      "desertStorm" : true
     }
   },
   "timestamp" : 22

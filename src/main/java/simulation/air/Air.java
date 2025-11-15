@@ -38,12 +38,14 @@ public abstract class Air extends Entity {
         return Entity.round(normalizedToxicity);
     }
     public void addOxygen(double amount) {
-        this.oxygenLevel += amount;
-        this.oxygenLevel = Entity.round(this.oxygenLevel);
+        oxygenLevel += amount;
+        double normalized = Math.max(0, Math.min(100, oxygenLevel));
+        oxygenLevel = Entity.round(normalized);
     }
     public void addHumidity(double amount) {
-        this.humidity += amount;
-        this.humidity = Entity.round(this.humidity);
+        humidity += amount;
+        double normalized = Math.max(0, Math.min(100, humidity));
+        humidity = Entity.round(normalized);
     }
     public abstract boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp);
     public abstract double airQualityScore(int currentTimestamp);

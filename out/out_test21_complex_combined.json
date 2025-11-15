@@ -860,10 +860,10 @@
       "name" : "LightForestSoil",
       "mass" : 1500.0,
       "nitrogen" : 2.5,
-      "waterRetention" : 1.0,
+      "waterRetention" : 0.9,
       "soilpH" : 7.7,
       "organicMatter" : 0.3,
-      "soilQuality" : 5.19,
+      "soilQuality" : 5.04,
       "leafLitter" : 0.3
     },
     "animals" : {
@@ -875,10 +875,10 @@
       "type" : "TropicalAir",
       "name" : "Humid Breeze",
       "mass" : 950000.0,
-      "humidity" : 80.7,
+      "humidity" : 80.6,
       "temperature" : 27.0,
       "oxygenLevel" : 21.0,
-      "airQuality" : 82.35,
+      "airQuality" : 82.3,
       "co2Level" : 0.045
     }
   },

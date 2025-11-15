@@ -2,6 +2,7 @@ package simulation;
 
 import simulation.animal.Animal;
 import simulation.plant.Plant;
+import simulation.soil.Soil;
 import simulation.water.Water;
 
 import java.util.ArrayList;
@@ -57,15 +58,15 @@ public class TerraBot {
         int bestX = x;
         int bestY = y;
         int bestScore = Integer.MAX_VALUE;
-        System.out.println("New move");
+        // System.out.println("New move");
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
-            System.out.println("Direction is " + x + " " + y + " " + newX + " " + newY);
+            // System.out.println("Direction is " + x + " " + y + " " + newX + " " + newY);
             Cell neighborCell = map.getCell(newX, newY);
             if (neighborCell != null) {
                 int currentScore = neighborCell.calculateRobotRiskScore(currentTimestamp);
-                System.out.println(currentScore);
+                // System.out.println(currentScore);
                 if (currentScore < bestScore) {
                     bestScore = currentScore;
                     bestX = newX;
@@ -98,8 +99,11 @@ public class TerraBot {
         }
         if (color.equals("none") && smell.equals("none") && sound.equals("none")) {
             Water water = currentCell.getWater();
+            Soil soil = currentCell.getSoil();
             if (water != null && !water.scanned) {
                 water.scanned = true;
+                water.setScanTimestamp(currentTimestamp);
+                soil.setScanTimestamp(currentTimestamp);
                 inventory.add(water.getName());
                 return "The scanned object is water.";
             }
@@ -112,10 +116,11 @@ public class TerraBot {
                 return "The scanned object is a plant.";
             }
         }
-        if (color.equals("brown") && smell.equals("earthy") && sound.equals("muuu")) {
+        if (color.equals("brown") && smell.equals("earthy") && sound.equals("muu")) {
             Animal animal = currentCell.getAnimal();
             if (animal != null && !animal.scanned) {
                 animal.scanned = true;
+                animal.setLastMoveTimestamp(currentTimestamp);
                 inventory.add(animal.getName());
                 return "The scanned object is an animal.";
             }
