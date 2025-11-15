@@ -14,8 +14,8 @@ public class PolarAir extends Air {
     @Override
     public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
         if (cmd.getType().equals("polarStorm")) {
-            this.weatherEffectValue = Entity.round(-cmd.getWindSpeed() * 0.2);
-            this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            weatherEffectValue = Entity.round(-cmd.getWindSpeed() * 0.2);
+            weatherEffectEndTimestamp = currentTimestamp + 2;
             return true;
         }
         return false;
@@ -23,8 +23,8 @@ public class PolarAir extends Air {
     @Override
     public double airQualityScore(int currentTimestamp) {
         double score = (oxygenLevel * 2) + (100 - Math.abs(temperature)) - (iceCrystalConcentration * 0.05);
-        if (currentTimestamp < this.weatherEffectEndTimestamp) {
-            score += this.weatherEffectValue;
+        if (currentTimestamp < weatherEffectEndTimestamp) {
+            score += weatherEffectValue;
         }
         double normalizeScore = Math.max(0, Math.min(100, score));
         return Entity.round(normalizeScore);

@@ -34,7 +34,8 @@ public abstract class Air extends Entity {
         double normalizedQuality = Math.max(0, Math.min(100, qualityScore));
         double roundedQuality = Entity.round(normalizedQuality);
         double toxicityAQ = 100 * (1 - roundedQuality / maxScore);
-        return Entity.round(toxicityAQ);
+        double normalizedToxicity = Math.max(0, Math.min(100, toxicityAQ));
+        return Entity.round(normalizedToxicity);
     }
     public void addOxygen(double amount) {
         this.oxygenLevel += amount;
@@ -47,9 +48,8 @@ public abstract class Air extends Entity {
     public abstract boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp);
     public abstract double airQualityScore(int currentTimestamp);
     protected abstract double maxScore();
-    public double getmaxScore() {
+    public double getMaxScore() {
         return maxScore();
     }
     public abstract void addSpecificFieldsToJson(ObjectNode node);
-
 }

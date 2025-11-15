@@ -28,8 +28,8 @@ public class DesertAir extends Air {
         if (cmd.getType().equals("desertStorm")) {
             desertStorm = cmd.isDesertStorm();
 
-            double penalty = desertStorm ? 30.0 : 0.0;
-            weatherEffectValue = Entity.round(-penalty);
+            double penalty = -(desertStorm ? 30.0 : 0.0);
+            weatherEffectValue = Entity.round(penalty);
             weatherEffectEndTimestamp = currentTimestamp + 2;
             return true;
         }

@@ -34,7 +34,7 @@ public abstract class Plant extends Entity {
         if (maturityState == MaturityState.dead) {
             return 0;
         }
-        double bonusOxygen = 0;
+        double bonusOxygen;
         if (maturityState == MaturityState.young) {
             bonusOxygen = 0.2;
         } else if (maturityState == MaturityState.mature) {

@@ -17,8 +17,8 @@ public class TropicalAir extends Air {
     @Override
     public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
         if (cmd.getType().equals("rainfall")) {
-            this.weatherEffectValue = Entity.round(cmd.getRainfall() * 0.3);
-            this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            weatherEffectValue = Entity.round(cmd.getRainfall() * 0.3);
+            weatherEffectEndTimestamp = currentTimestamp + 2;
             return true;
         }
         return false;
@@ -26,8 +26,8 @@ public class TropicalAir extends Air {
     @Override
     public double airQualityScore(int currentTimestamp) {
         double score = (oxygenLevel * 2) + (humidity * 0.5) - (co2Level * 0.01);
-        if (currentTimestamp < this.weatherEffectEndTimestamp) {
-            score += this.weatherEffectValue;
+        if (currentTimestamp < weatherEffectEndTimestamp) {
+            score += weatherEffectValue;
         }
         double normalizeScore = Math.max(0, Math.min(100, score));
         return Entity.round(normalizeScore);

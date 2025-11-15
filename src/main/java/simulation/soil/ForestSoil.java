@@ -15,15 +15,15 @@ public class ForestSoil extends Soil {
     }
     @Override
     public double calculateQuality() {
-        double score = nitrogen * 1.2 + organicMatter * 2 + waterRetention * 1.5
-                + leafLitter * 0.3;
-        score = Math.max(0, Math.min(100, score));
-        return Entity.round(score);
+        double score = nitrogen * 1.2 + organicMatter * 2 + waterRetention * 1.5 + leafLitter * 0.3;
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public double calculateBlockProbability() {
-        double score = (waterRetention * 0.6 + leafLitter * 0.4) / 80.0 * 100;
-        return Entity.round(score);
+        double score = (waterRetention * 0.6 + leafLitter * 0.4) / 80 * 100;
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public void addSpecificFieldsToJson(ObjectNode node) {

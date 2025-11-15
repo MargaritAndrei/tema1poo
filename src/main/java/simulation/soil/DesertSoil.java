@@ -16,13 +16,14 @@ public class DesertSoil extends Soil {
     @Override
     public double calculateQuality() {
         double score = nitrogen * 0.5 + waterRetention * 0.3 - salinity * 2;
-        score = Math.max(0, Math.min(100, score));
-        return Entity.round(score);
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public double calculateBlockProbability() {
-        double score = (100 - waterRetention + salinity) / 100.0 * 100;
-        return Entity.round(score);
+        double score = (100 - waterRetention + salinity) / 100 * 100;
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public void addSpecificFieldsToJson(ObjectNode node) {

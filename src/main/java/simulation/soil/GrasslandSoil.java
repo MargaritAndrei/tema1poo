@@ -16,13 +16,14 @@ public class GrasslandSoil extends Soil {
     @Override
     public double calculateQuality() {
         double score = (nitrogen * 1.3) + (organicMatter * 1.5) + (rootDensity * 0.8);
-        score = Math.max(0, Math.min(100, score));
-        return Entity.round(score);
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public double calculateBlockProbability() {
-        double score = ((50 - rootDensity) + waterRetention * 0.5) / 75.0 * 100;
-        return Entity.round(score);
+        double score = ((50 - rootDensity) + waterRetention * 0.5) / 75 * 100;
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public void addSpecificFieldsToJson(ObjectNode node) {

@@ -16,13 +16,14 @@ public class TundraSoil extends Soil {
     @Override
     public double calculateQuality() {
         double score = (nitrogen * 0.7) + (organicMatter * 0.5) - (permafrostDepth * 1.5);
-        score = Math.max(0, Math.min(100, score));
-        return Entity.round(score);
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public double calculateBlockProbability() {
-        double score = (50 - permafrostDepth) / 50.0 * 100;
-        return Entity.round(score);
+        double score = (50 - permafrostDepth) / 50 * 100;
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public void addSpecificFieldsToJson(ObjectNode node) {

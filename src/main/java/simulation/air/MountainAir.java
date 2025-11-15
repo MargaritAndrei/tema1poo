@@ -18,7 +18,7 @@ public class MountainAir extends Air {
     public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
         if (cmd.getType().equals("peopleHiking")) {
             this.weatherEffectValue = Entity.round(-cmd.getNumberOfHikers() * 0.1);
-            this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            this.weatherEffectEndTimestamp = currentTimestamp;
             return true;
         }
         return false;

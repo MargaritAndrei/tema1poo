@@ -16,13 +16,14 @@ public class SwampSoil extends Soil {
     @Override
     public double calculateQuality() {
         double score = nitrogen * 1.1 + organicMatter * 2.2 - waterLogging * 5;
-        score = Math.max(0, Math.min(100, score));
-        return Entity.round(score);
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public double calculateBlockProbability() {
         double score = waterLogging * 10;
-        return Entity.round(score);
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
     @Override
     public void addSpecificFieldsToJson(ObjectNode node) {

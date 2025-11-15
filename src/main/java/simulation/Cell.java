@@ -66,11 +66,13 @@ public class Cell {
     }
     public int calculateRobotRiskScore(int currentTimestamp) {
         double sum = 0;
-        int count = 2;
+        double count = 2;
         sum += soil.calculateBlockProbability();
         sum += air.calculateToxicity(currentTimestamp);
         if (plant != null) {
-            sum += Entity.round(plant.plantPossibility() / 100.0);
+            double score = plant.plantPossibility() / 100.0;
+            double normalizedScore = Math.max(0, Math.min(100, score));
+            sum += Entity.round(normalizedScore);
             count++;
         }
         if (animal != null) {
@@ -78,7 +80,8 @@ public class Cell {
             count++;
         }
         double mean = Math.abs(sum / count);
-        return (int) Math.round(mean);
+        double normalizedMean = Math.max(0, Math.min(100, mean));
+        return (int) Math.round(normalizedMean);
     }
     public void processEvolution(int currentTimestamp) {
         if (animal != null && animal.scanned) {

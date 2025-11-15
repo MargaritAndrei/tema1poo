@@ -18,8 +18,8 @@ public class TemperateAir extends Air {
     public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
         if (cmd.getType().equals("newSeason")) {
             double penalty = cmd.getSeason().equalsIgnoreCase("Spring") ? 15.0 : 0.0;
-            this.weatherEffectValue = Entity.round(-penalty);
-            this.weatherEffectEndTimestamp = currentTimestamp + 2;
+            weatherEffectValue = Entity.round(-penalty);
+            weatherEffectEndTimestamp = currentTimestamp + 2;
             return true;
         }
         return false;
@@ -28,7 +28,7 @@ public class TemperateAir extends Air {
     public double airQualityScore(int currentTimestamp) {
         double score = (oxygenLevel * 2) + (humidity * 0.7) - (pollenLevel * 0.1);
 
-        if (currentTimestamp < this.weatherEffectEndTimestamp) {
+        if (currentTimestamp < weatherEffectEndTimestamp) {
             score += this.weatherEffectValue;
         }
         double normalizeScore = Math.max(0, Math.min(100, score));

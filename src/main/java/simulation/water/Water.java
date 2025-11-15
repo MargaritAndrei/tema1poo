@@ -52,6 +52,11 @@ public class Water extends Entity {
             air.addHumidity(0.1);
         }
     }
+    public void tryToGrowPlant(Plant plant) {
+        if (plant != null && plant.scanned) {
+            plant.grow(0.2);
+        }
+    }
     public double calculateQuality() {
         double purity_score = purity / 100;
         double pH_score = 1 - abs(ph - 7.5) / 7.5;
@@ -66,10 +71,5 @@ public class Water extends Entity {
                 + 0.15 * contaminant_score
                 + 0.2 * frozen_score) * 100;
         return Entity.round(quality);
-    }
-    public void tryToGrowPlant(Plant plant) {
-        if (plant != null) {
-            plant.grow(0.2);
-        }
     }
 }

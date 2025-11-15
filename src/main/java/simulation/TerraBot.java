@@ -52,17 +52,20 @@ public class TerraBot {
         if (isCharging(currentTimestamp)) {
             return "ERROR: Robot still charging. Cannot perform action";
         }
-        int dx[] = {-1, 0, 1, 0};
-        int dy[] = {0, 1, 0, -1};
+        int dx[] = {0, 1, 0, -1};
+        int dy[] = {1, 0, -1, 0};
         int bestX = x;
         int bestY = y;
         int bestScore = Integer.MAX_VALUE;
+        System.out.println("New move");
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
+            System.out.println("Direction is " + x + " " + y + " " + newX + " " + newY);
             Cell neighborCell = map.getCell(newX, newY);
             if (neighborCell != null) {
                 int currentScore = neighborCell.calculateRobotRiskScore(currentTimestamp);
+                System.out.println(currentScore);
                 if (currentScore < bestScore) {
                     bestScore = currentScore;
                     bestX = newX;
@@ -82,6 +85,7 @@ public class TerraBot {
             return "ERROR: Robot still charging. Cannot perform action";
         }
         chargeEndTime = currentTimestamp + timeToCharge;
+        energy += timeToCharge;
         return "Robot battery is charging.";
     }
     public String scanObject(Cell currentCell, String color, String smell,

@@ -40,7 +40,7 @@ public abstract class Animal extends Entity {
         fertilizerToProduce = 0;
     }
     public void updateState(Air currentAir, int currentTimestamp) {
-        double toxicThreshold = 0.8 * currentAir.getmaxScore();
+        double toxicThreshold = 0.8 * currentAir.getMaxScore();
         double toxicity = currentAir.calculateToxicity(currentTimestamp);
         if (toxicity > toxicThreshold) {
             state = AnimalState.sick;
@@ -54,8 +54,8 @@ public abstract class Animal extends Entity {
         }
         Cell moveCell = null;
         double bestWaterQuality = -1.0;
-        int dx[] = {-1, 0, 1, 0};
-        int dy[] = {0, 1, 0, -1};
+        int dx[] = {0, 1, 0, -1};
+        int dy[] = {1, 0, -1, 0};
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
@@ -82,7 +82,7 @@ public abstract class Animal extends Entity {
                 return candidateCell;
             }
         }
-        bestWaterQuality = -1.0;
+        bestWaterQuality = -2.0;
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
@@ -109,7 +109,7 @@ public abstract class Animal extends Entity {
         return null;
     }
     public void tryToFeed(Cell currentCell) {
-        if (!scanned || state == AnimalState.sick) {
+        if (!scanned) {
             return;
         }
         state = AnimalState.well_fed;
@@ -157,6 +157,7 @@ public abstract class Animal extends Entity {
     }
     public double calculateAttackRisk() {
         double score = (100 - animalPossibility()) / 10.0;
-        return Entity.round(score);
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
     }
 }
