@@ -9,7 +9,7 @@ public class PolarAir extends Air {
     public PolarAir(String name, double mass, double humidity,
                     double temperature, double oxygenLevel, double iceCrystalConcentration) {
         super(name, mass, humidity, temperature, oxygenLevel);
-        this.iceCrystalConcentration = iceCrystalConcentration;
+        this.iceCrystalConcentration = Entity.round(iceCrystalConcentration);
     }
     @Override
     public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
@@ -23,11 +23,12 @@ public class PolarAir extends Air {
     @Override
     public double airQualityScore(int currentTimestamp) {
         double score = (oxygenLevel * 2) + (100 - Math.abs(temperature)) - (iceCrystalConcentration * 0.05);
+        double baseScore = Math.max(0, Math.min(100, score));
         if (currentTimestamp < weatherEffectEndTimestamp) {
-            score += weatherEffectValue;
+            baseScore += weatherEffectValue;
         }
-        double normalizeScore = Math.max(0, Math.min(100, score));
-        return Entity.round(normalizeScore);
+        double finalScore = Math.max(0, Math.min(100, baseScore));
+        return Entity.round(finalScore);
     }
     @Override
     protected double maxScore() {

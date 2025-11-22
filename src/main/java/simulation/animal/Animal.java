@@ -35,6 +35,11 @@ public abstract class Animal extends Entity {
     public void setY(int y) {
         this.y = y;
     }
+    public double calculateAttackRisk() {
+        double score = (100 - animalPossibility()) / 10.0;
+        double normalizeScore = Math.max(0, Math.min(100, score));
+        return Entity.round(normalizeScore);
+    }
     public void setLastMoveTimestamp(int timestamp) {
         lastMoveTimestamp = timestamp;
     }
@@ -51,6 +56,14 @@ public abstract class Animal extends Entity {
             state = AnimalState.hungry;
         }
     }
+    private Cell processMoveInteraction(Cell targetCell, int currentTimestamp) {
+        tryToFeed(targetCell);
+        if (targetCell.getAnimal() == null) {
+            lastMoveTimestamp = currentTimestamp;
+            return targetCell;
+        }
+        return null;
+    }
     public Cell move(Table map, int x, int y, int currentTimestamp) {
         if (!scanned || currentTimestamp - lastMoveTimestamp < 2) {
             return null;
@@ -64,7 +77,13 @@ public abstract class Animal extends Entity {
             int newY = y + dy[i];
             Cell candidateCell = map.getCell(newX, newY);
             if (candidateCell != null) {
-                if (candidateCell.getPlant() != null && candidateCell.getWater() != null) {
+                Plant plant = candidateCell.getPlant();
+                Water water = candidateCell.getWater();
+                Animal animal = candidateCell.getAnimal();
+                if (animal != null && !isPredator()) {
+                    continue;
+                }
+                if (plant != null && water != null && plant.scanned && water.scanned) {
                     if (candidateCell.getWater().calculateQuality() > bestWaterQuality) {
                         bestWaterQuality = candidateCell.getWater().calculateQuality();
                         moveCell = candidateCell;
@@ -73,16 +92,30 @@ public abstract class Animal extends Entity {
             }
         }
         if (moveCell != null) {
-            lastMoveTimestamp = currentTimestamp;
-            return moveCell;
+            if (processMoveInteraction(moveCell, currentTimestamp) != null) {
+                System.out.println(getName() + " moved to cell " + "(" +
+                        moveCell.getX() + ", " + moveCell.getY() + ")" + " at timestamp " + currentTimestamp);
+                return moveCell;
+            }
         }
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
             Cell candidateCell = map.getCell(newX, newY);
-            if (candidateCell != null && candidateCell.getPlant() != null) {
-                lastMoveTimestamp = currentTimestamp;
-                return candidateCell;
+            if (candidateCell != null) {
+                Plant plant = candidateCell.getPlant();
+                Animal animal  = candidateCell.getAnimal();
+                if (animal != null && !isPredator()) {
+                    continue;
+                }
+                if (plant != null && plant.scanned) {
+                    if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
+                        System.out.println(getName() + " moved to cell " + "(" +
+                                candidateCell.getX() + ", " + candidateCell.getY() + ")" +
+                                " at timestamp " + currentTimestamp);
+                        return candidateCell;
+                    }
+                }
             }
         }
         bestWaterQuality = -2.0;
@@ -90,23 +123,41 @@ public abstract class Animal extends Entity {
             int newX = x + dx[i];
             int newY = y + dy[i];
             Cell candidateCell = map.getCell(newX, newY);
-            if (candidateCell != null && candidateCell.getWater() != null &&
-                    candidateCell.getWater().calculateQuality() > bestWaterQuality) {
-                bestWaterQuality = candidateCell.getWater().calculateQuality();
-                moveCell = candidateCell;
+            if (candidateCell != null) {
+                Water water = candidateCell.getWater();
+                Animal animal = candidateCell.getAnimal();
+                if (animal != null && !isPredator()) {
+                    continue;
+                }
+                if (water != null && water.scanned &&
+                        water.calculateQuality() > bestWaterQuality) {
+                    bestWaterQuality = candidateCell.getWater().calculateQuality();
+                    moveCell = candidateCell;
+                }
             }
         }
         if (moveCell != null) {
-            lastMoveTimestamp = currentTimestamp;
-            return moveCell;
+            if (processMoveInteraction(moveCell, currentTimestamp) != null) {
+                System.out.println(getName() + " moved to cell " + "(" +
+                        moveCell.getX() + ", " + moveCell.getY() + ")" + " at timestamp " + currentTimestamp);
+                return moveCell;
+            }
         }
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
             Cell candidateCell = map.getCell(newX, newY);
             if (candidateCell != null) {
-                lastMoveTimestamp = currentTimestamp;
-                return candidateCell;
+                Animal animal = candidateCell.getAnimal();
+                if (animal != null && !isPredator()) {
+                    continue;
+                }
+                if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
+                    System.out.println(getName() + " moved to cell " + "(" +
+                            candidateCell.getX() + ", " + candidateCell.getY() + ")" +
+                            " at timestamp " + currentTimestamp);
+                    return candidateCell;
+                }
             }
         }
         return null;
@@ -119,14 +170,16 @@ public abstract class Animal extends Entity {
         Water water = currentCell.getWater();
         Plant plant = currentCell.getPlant();
         Animal prey = currentCell.getAnimal();
-        if (isPredator() && prey != null) {
+        Soil soil = currentCell.getSoil();
+        boolean plantScanned = (plant != null && plant.scanned);
+        boolean waterScanned = (water != null && water.scanned);
+        if (isPredator() && prey != null && prey != this) {
             setMass(getMass() + prey.getMass());
             fertilizerToProduce = 0.5;
+            produceFertilizer(soil);
             currentCell.setAnimal(null);
             return;
         }
-        boolean plantScanned = (plant != null && plant.scanned);
-        boolean waterScanned = (water != null && water.scanned);
         if (plantScanned && waterScanned) {
             currentCell.setPlant(null);
             double intakeRate = 0.08;
@@ -137,12 +190,14 @@ public abstract class Animal extends Entity {
             }
             setMass(getMass() + waterToDrink + plant.getMass());
             fertilizerToProduce = 0.8;
+            produceFertilizer(soil);
             return;
         }
         if (plantScanned) {
             currentCell.setPlant(null);
             setMass(getMass() + plant.getMass());
             fertilizerToProduce = 0.5;
+            produceFertilizer(soil);
             return;
         }
         if (waterScanned) {
@@ -154,13 +209,9 @@ public abstract class Animal extends Entity {
             }
             setMass(getMass() + waterToDrink);
             fertilizerToProduce = 0.5;
+            produceFertilizer(soil);
             return;
         }
         state = AnimalState.hungry;
-    }
-    public double calculateAttackRisk() {
-        double score = (100 - animalPossibility()) / 10.0;
-        double normalizeScore = Math.max(0, Math.min(100, score));
-        return Entity.round(normalizeScore);
     }
 }

@@ -9,7 +9,7 @@ public class TropicalAir extends Air {
     public TropicalAir(String name, double mass, double humidity,
                        double temperature, double oxygenLevel, double co2Level) {
         super(name, mass, humidity, temperature, oxygenLevel);
-        this.co2Level = co2Level;
+        this.co2Level = Entity.round(co2Level);
     }
     public double getCo2Level() {
         return co2Level;
@@ -26,11 +26,12 @@ public class TropicalAir extends Air {
     @Override
     public double airQualityScore(int currentTimestamp) {
         double score = (oxygenLevel * 2) + (humidity * 0.5) - (co2Level * 0.01);
+        double baseScore = Math.max(0, Math.min(100, score));
         if (currentTimestamp < weatherEffectEndTimestamp) {
-            score += weatherEffectValue;
+            baseScore += weatherEffectValue;
         }
-        double normalizeScore = Math.max(0, Math.min(100, score));
-        return Entity.round(normalizeScore);
+        double finalScore = Math.max(0, Math.min(100, baseScore));
+        return Entity.round(finalScore);
     }
     @Override
     protected double maxScore() {
@@ -39,6 +40,6 @@ public class TropicalAir extends Air {
 
     @Override
     public void addSpecificFieldsToJson(ObjectNode node) {
-        node.put("co2Level", getCo2Level());
+        node.put("co2Level", co2Level);
     }
 }

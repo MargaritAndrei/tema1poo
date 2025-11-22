@@ -9,7 +9,7 @@ public class TemperateAir extends Air {
     public TemperateAir(String name, double mass, double humidity,
                         double temperature, double oxygenLevel, double pollenLevel) {
         super(name, mass, humidity, temperature, oxygenLevel);
-        this.pollenLevel = pollenLevel;
+        this.pollenLevel = Entity.round(pollenLevel);
     }
     public double getPollenLevel() {
         return pollenLevel;
@@ -27,12 +27,12 @@ public class TemperateAir extends Air {
     @Override
     public double airQualityScore(int currentTimestamp) {
         double score = (oxygenLevel * 2) + (humidity * 0.7) - (pollenLevel * 0.1);
-
+        double baseScore = Math.max(0, Math.min(100, score));
         if (currentTimestamp < weatherEffectEndTimestamp) {
-            score += this.weatherEffectValue;
+            baseScore += weatherEffectValue;
         }
-        double normalizeScore = Math.max(0, Math.min(100, score));
-        return Entity.round(normalizeScore);
+        double finalScore = Math.max(0, Math.min(100, baseScore));
+        return Entity.round(finalScore);
     }
     @Override
     protected double maxScore() {

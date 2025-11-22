@@ -7,7 +7,7 @@ public class ForestSoil extends Soil {
     public ForestSoil(String name, double mass, double nitrogen, double waterRetention,
                       double soilpH, double organicMatter, double leafLitter) {
         super(name, mass, nitrogen, waterRetention, soilpH, organicMatter);
-        this.leafLitter = leafLitter;
+        this.leafLitter = Entity.round(leafLitter);
     }
     protected double leafLitter;
     public double getLeafLitter() {

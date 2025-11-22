@@ -9,7 +9,7 @@ public class MountainAir extends Air {
     public MountainAir (String name, double mass, double humidity,
                         double temperature, double oxygenLevel, double altitude) {
         super(name, mass, humidity, temperature, oxygenLevel);
-        this.altitude = altitude;
+        this.altitude = Entity.round(altitude);
     }
     public double getAltitude() {
         return altitude;
@@ -27,11 +27,12 @@ public class MountainAir extends Air {
     public double airQualityScore(int currentTimestamp) {
         double oxygenFactor = oxygenLevel - (altitude / 1000.0 * 0.5);
         double score = (oxygenFactor * 2) + (humidity * 0.6);
-        if (currentTimestamp < this.weatherEffectEndTimestamp) {
-            score += this.weatherEffectValue;
+        double baseScore = Math.max(0, Math.min(100, score));
+        if (currentTimestamp < weatherEffectEndTimestamp) {
+            baseScore += weatherEffectValue;
         }
-        double normalizeScore = Math.max(0, Math.min(100, score));
-        return Entity.round(normalizeScore);
+        double finalScore = Math.max(0, Math.min(100, baseScore));
+        return Entity.round(finalScore);
     }
     @Override
     protected double maxScore() {

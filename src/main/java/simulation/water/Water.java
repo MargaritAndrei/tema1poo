@@ -20,11 +20,11 @@ public class Water extends Entity {
         super(name, mass);
         scanned = false;
         this.type = type;
-        this.salinity = salinity;
-        this.ph = ph;
-        this.purity = purity;
-        this.turbidity = turbidity;
-        this.contaminantIndex = contaminantIndex;
+        this.salinity = Entity.round(salinity);
+        this.ph = Entity.round(ph);
+        this.purity = Entity.round(purity);
+        this.turbidity = Entity.round(turbidity);
+        this.contaminantIndex = Entity.round(contaminantIndex);
         this.isFrozen = isFrozen;
     }
     public String getType() {
@@ -54,9 +54,9 @@ public class Water extends Entity {
             air.addHumidity(0.1);
         }
     }
-    public void tryToGrowPlant(Plant plant) {
+    public void tryToGrowPlant(Plant plant, int currentTimestamp) {
         if (plant != null && plant.scanned) {
-            plant.grow(0.2);
+            plant.grow(0.2,  currentTimestamp);
         }
     }
     public double calculateQuality() {

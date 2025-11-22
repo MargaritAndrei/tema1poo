@@ -137,11 +137,11 @@
   "timestamp" : 3
 }, {
   "command" : "scanObject",
-  "message" : "ERROR: Object not found. Cannot perform action",
+  "message" : "The scanned object is a plant.",
   "timestamp" : 4
 }, {
   "command" : "learnFact",
-  "message" : "ERROR: Subject not yet saved. Cannot perform action",
+  "message" : "The fact has been successfully saved in the database.",
   "timestamp" : 5
 }, {
   "command" : "getEnergyStatus",
@@ -153,7 +153,7 @@
   "timestamp" : 7
 }, {
   "command" : "improveEnvironment",
-  "message" : "ERROR: Subject not yet saved. Cannot perform action",
+  "message" : "The Rose was planted successfully.",
   "timestamp" : 8
 }, {
   "command" : "moveRobot",
@@ -191,7 +191,7 @@
       "temperature" : 28.0,
       "oxygenLevel" : 21.3,
       "airQuality" : 84.6,
-      "co2Level" : 0.047
+      "co2Level" : 0.05
     }
   },
   "timestamp" : 10
@@ -231,7 +231,7 @@
       "temperature" : 28.0,
       "oxygenLevel" : 21.3,
       "airQuality" : 88.8,
-      "co2Level" : 0.047
+      "co2Level" : 0.05
     }
   },
   "timestamp" : 12
@@ -267,13 +267,13 @@
       "temperature" : 28.0,
       "oxygenLevel" : 21.3,
       "airQuality" : 84.6,
-      "co2Level" : 0.047
+      "co2Level" : 0.05
     }
   },
   "timestamp" : 13
 }, {
   "command" : "scanObject",
-  "message" : "ERROR: Object not found. Cannot perform action",
+  "message" : "The scanned object is an animal.",
   "timestamp" : 14
 }, {
   "command" : "rechargeBattery",
@@ -289,7 +289,7 @@
   "timestamp" : 17
 }, {
   "command" : "learnFact",
-  "message" : "ERROR: Subject not yet saved. Cannot perform action",
+  "message" : "The fact has been successfully saved in the database.",
   "timestamp" : 28
 }, {
   "command" : "learnFact",
@@ -326,7 +326,7 @@
       "temperature" : 28.0,
       "oxygenLevel" : 21.3,
       "airQuality" : 84.6,
-      "co2Level" : 0.047
+      "co2Level" : 0.05
     }
   },
   "timestamp" : 31
@@ -336,7 +336,13 @@
   "timestamp" : 32
 }, {
   "command" : "printKnowledgeBase",
-  "output" : [ ],
+  "output" : [ {
+    "topic" : "Rose",
+    "facts" : [ "Method to plant Rose" ]
+  }, {
+    "topic" : "Earthworm",
+    "facts" : [ "Method to fertilize with Earthworm" ]
+  } ],
   "timestamp" : 33
 }, {
   "command" : "learnFact",
@@ -345,6 +351,12 @@
 }, {
   "command" : "printKnowledgeBase",
   "output" : [ {
+    "topic" : "Rose",
+    "facts" : [ "Method to plant Rose" ]
+  }, {
+    "topic" : "Earthworm",
+    "facts" : [ "Method to fertilize with Earthworm" ]
+  }, {
     "topic" : "DeepLake",
     "facts" : [ "Method to increase humidity." ]
   } ],
@@ -359,7 +371,7 @@
   "timestamp" : 37
 }, {
   "command" : "improveEnvironment",
-  "message" : "ERROR: Subject not yet saved. Cannot perform action",
+  "message" : "The soil was successfully fertilized using Earthworm",
   "timestamp" : 52
 }, {
   "command" : "moveRobot",
@@ -398,7 +410,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 0, 1 ],
-    "totalNrOfObjects" : 2,
+    "totalNrOfObjects" : 1,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {
@@ -408,7 +420,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 2, 1 ],
-    "totalNrOfObjects" : 2,
+    "totalNrOfObjects" : 1,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {
@@ -458,7 +470,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 2, 3 ],
-    "totalNrOfObjects" : 2,
+    "totalNrOfObjects" : 3,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {
@@ -608,7 +620,7 @@
   "timestamp" : 62
 }, {
   "command" : "scanObject",
-  "message" : "ERROR: Not enough battery left. Cannot perform action",
+  "message" : "The scanned object is a plant.",
   "timestamp" : 63
 }, {
   "command" : "getEnergyStatus",
@@ -640,11 +652,6 @@
       "soilQuality" : 4.44,
       "leafLitter" : 0.3
     },
-    "plants" : {
-      "type" : "Mosses",
-      "name" : "SphagnumMoss",
-      "mass" : 0.25
-    },
     "animals" : {
       "type" : "Herbivores",
       "name" : "Deer",
@@ -656,15 +663,15 @@
       "mass" : 900000.0,
       "humidity" : 60.0,
       "temperature" : 15.0,
-      "oxygenLevel" : 20.0,
-      "airQuality" : 80.6,
+      "oxygenLevel" : 37.5,
+      "airQuality" : 100.0,
       "pollenLevel" : 14.0
     }
   },
   "timestamp" : 114
 }, {
   "command" : "learnFact",
-  "message" : "ERROR: Subject not yet saved. Cannot perform action",
+  "message" : "The fact has been successfully saved in the database.",
   "timestamp" : 115
 }, {
   "command" : "moveRobot",
@@ -701,7 +708,7 @@
       "temperature" : 27.0,
       "oxygenLevel" : 21.0,
       "airQuality" : 87.7,
-      "co2Level" : 0.045
+      "co2Level" : 0.05
     }
   },
   "timestamp" : 118
@@ -732,7 +739,7 @@
       "temperature" : 27.0,
       "oxygenLevel" : 21.0,
       "airQuality" : 82.0,
-      "co2Level" : 0.045
+      "co2Level" : 0.05
     }
   },
   "timestamp" : 119
@@ -742,7 +749,7 @@
   "timestamp" : 120
 }, {
   "command" : "improveEnvironment",
-  "message" : "ERROR: Subject not yet saved. Cannot perform action",
+  "message" : "The SphagnumMoss was planted successfully.",
   "timestamp" : 121
 }, {
   "command" : "improveEnvironment",
@@ -754,15 +761,21 @@
   "timestamp" : 123
 }, {
   "command" : "improveEnvironment",
-  "message" : "The humidity was successfully increased using SmallPond.",
+  "message" : "The humidity was successfully increased using SmallPond",
   "timestamp" : 124
 }, {
   "command" : "printKnowledgeBase",
-  "output" : [ ],
+  "output" : [ {
+    "topic" : "SphagnumMoss",
+    "facts" : [ "Method to plant SphagnumMoss" ]
+  }, {
+    "topic" : "SmallPond",
+    "facts" : [ "Method to increase humidity." ]
+  } ],
   "timestamp" : 125
 }, {
   "command" : "moveRobot",
-  "message" : "The robot has successfully moved to position (0, 3).",
+  "message" : "The robot has successfully moved to position (0, 1).",
   "timestamp" : 126
 }, {
   "command" : "printMap",
@@ -788,7 +801,7 @@
     "soilQuality" : "poor"
   }, {
     "section" : [ 0, 1 ],
-    "totalNrOfObjects" : 2,
+    "totalNrOfObjects" : 1,
     "airQuality" : "good",
     "soilQuality" : "poor"
   }, {
@@ -860,26 +873,26 @@
       "name" : "LightForestSoil",
       "mass" : 1500.0,
       "nitrogen" : 2.5,
-      "waterRetention" : 0.9,
+      "waterRetention" : 0.5,
       "soilpH" : 7.7,
       "organicMatter" : 0.3,
-      "soilQuality" : 5.04,
+      "soilQuality" : 4.44,
       "leafLitter" : 0.3
     },
     "animals" : {
-      "type" : "Omnivores",
-      "name" : "Raccoon",
-      "mass" : 6.0
+      "type" : "Herbivores",
+      "name" : "Deer",
+      "mass" : 90.0
     },
     "air" : {
-      "type" : "TropicalAir",
-      "name" : "Humid Breeze",
-      "mass" : 950000.0,
-      "humidity" : 80.6,
-      "temperature" : 27.0,
-      "oxygenLevel" : 21.0,
-      "airQuality" : 82.3,
-      "co2Level" : 0.045
+      "type" : "TemperateAir",
+      "name" : "Spring Air",
+      "mass" : 900000.0,
+      "humidity" : 60.0,
+      "temperature" : 15.0,
+      "oxygenLevel" : 37.5,
+      "airQuality" : 85.0,
+      "pollenLevel" : 14.0
     }
   },
   "timestamp" : 129

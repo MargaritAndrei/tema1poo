@@ -11,14 +11,29 @@ public abstract class Plant extends Entity {
         growthProgress = 0;
         maturityState = MaturityState.young;
         scanned = false;
+        lastGrowthTimestamp = 0;
     }
+    protected int lastGrowthTimestamp;
     protected abstract double categoryOxygen();
     public abstract double plantPossibility();
-    public void grow (double amount) {
+    public void setLastGrowthTimestamp(int timestamp) {
+        lastGrowthTimestamp = timestamp;
+    }
+    public MaturityState getMaturityState() {
+        return  maturityState;
+    }
+    public void grow (double amount, int currentTimestamp) {
         if (maturityState == MaturityState.dead) {
             return;
         }
+        if (currentTimestamp - lastGrowthTimestamp < 2) {
+            return;
+        }
+        if (!scanned) {
+            return;
+        }
         growthProgress += amount;
+        growthProgress = Entity.round(growthProgress);
         if (growthProgress >= 1.0) {
             growthProgress = 0;
             if (maturityState == MaturityState.young) {
@@ -42,6 +57,6 @@ public abstract class Plant extends Entity {
         } else {
             bonusOxygen = 0.4;
         }
-        return categoryOxygen() + bonusOxygen;
+        return Entity.round(categoryOxygen() + bonusOxygen);
     }
 }

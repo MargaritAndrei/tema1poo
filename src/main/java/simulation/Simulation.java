@@ -35,42 +35,42 @@ public class Simulation {
         for (SoilInput soilInput : simulationData.getTerritorySectionParams().getSoil()) {
             switch (soilInput.getType()) {
                 case "ForestSoil":
-                    ForestSoil forestSoil = new ForestSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
-                            soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getLeafLitter());
                     for (PairInput section : soilInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        ForestSoil forestSoil = new ForestSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
+                                soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getLeafLitter());
                         cell.setSoil(forestSoil);
                     }
                     break;
                 case "DesertSoil":
-                    DesertSoil desertSoil = new DesertSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
-                            soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getSalinity());
                     for (PairInput section : soilInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        DesertSoil desertSoil = new DesertSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
+                                soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getSalinity());
                         cell.setSoil(desertSoil);
                     }
                     break;
                 case "GrasslandSoil":
-                    GrasslandSoil grasslandSoil = new GrasslandSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
-                            soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getRootDensity());
                     for (PairInput section : soilInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        GrasslandSoil grasslandSoil = new GrasslandSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
+                                soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getRootDensity());
                         cell.setSoil(grasslandSoil);
                     }
                     break;
                 case "SwampSoil":
-                    SwampSoil swampSoil = new SwampSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
-                            soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getWaterLogging());
                     for (PairInput section : soilInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        SwampSoil swampSoil = new SwampSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
+                                soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getWaterLogging());
                         cell.setSoil(swampSoil);
                     }
                     break;
                 case "TundraSoil":
-                    TundraSoil tundraSoil = new TundraSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
-                            soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getPermafrostDepth());
                     for (PairInput section : soilInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        TundraSoil tundraSoil = new TundraSoil(soilInput.getName(), soilInput.getMass(), soilInput.getNitrogen(),
+                                soilInput.getWaterRetention(), soilInput.getSoilpH(), soilInput.getOrganicMatter(), soilInput.getPermafrostDepth());
                         cell.setSoil(tundraSoil);
                     }
                     break;
@@ -79,42 +79,42 @@ public class Simulation {
         for (AirInput airInput : simulationData.getTerritorySectionParams().getAir()) {
             switch (airInput.getType()) {
                 case "TropicalAir":
-                    TropicalAir tropicalAir = new TropicalAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
-                            airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getCo2Level());
                     for (PairInput section : airInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        TropicalAir tropicalAir = new TropicalAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
+                                airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getCo2Level());
                         cell.setAir(tropicalAir);
                     }
                     break;
                 case "PolarAir":
-                    PolarAir polarAir = new PolarAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
-                            airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getIceCrystalConcentration());
                     for (PairInput section : airInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        PolarAir polarAir = new PolarAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
+                                airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getIceCrystalConcentration());
                         cell.setAir(polarAir);
                     }
                     break;
                 case "TemperateAir":
-                    TemperateAir temperateAir = new TemperateAir (airInput.getName(), airInput.getMass(),
-                            airInput.getHumidity(), airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getPollenLevel());
                     for (PairInput section : airInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        TemperateAir temperateAir = new TemperateAir (airInput.getName(), airInput.getMass(),
+                                airInput.getHumidity(), airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getPollenLevel());
                         cell.setAir(temperateAir);
                     }
                     break;
                 case "DesertAir":
-                    DesertAir desertAir = new DesertAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
-                            airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getDustParticles());
                     for (PairInput section : airInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        DesertAir desertAir = new DesertAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
+                                airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getDustParticles());
                         cell.setAir(desertAir);
                     }
                     break;
                 case "MountainAir":
-                    MountainAir mountainAir = new MountainAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
-                            airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getAltitude());
                     for (PairInput section : airInput.getSections()) {
                         Cell cell = map.getCell(section.getX(), section.getY());
+                        MountainAir mountainAir = new MountainAir (airInput.getName(), airInput.getMass(), airInput.getHumidity(),
+                                airInput.getTemperature(), airInput.getOxygenLevel(), airInput.getAltitude());
                         cell.setAir(mountainAir);
                     }
                     break;
@@ -231,16 +231,18 @@ public class Simulation {
             }
         }
         for (Animal animal : animalList) {
-            int oldX = animal.getX();
-            int oldY = animal.getY();
-            Cell newCell = animal.move(map, oldX, oldY, currentTimestamp);
-            if (newCell != null) {
-                int newX = newCell.getX();
-                int newY = newCell.getY();
-                map.getCell(oldX, oldY).setAnimal(null);
-                map.getCell(newX, newY).setAnimal(animal);
-                animal.setX(newX);
-                animal.setY(newY);
+            if (animal.scanned) {
+                int oldX = animal.getX();
+                int oldY = animal.getY();
+                Cell newCell = animal.move(map, oldX, oldY, currentTimestamp);
+                if (newCell != null) {
+                    int newX = newCell.getX();
+                    int newY = newCell.getY();
+                    map.getCell(oldX, oldY).setAnimal(null);
+                    map.getCell(newX, newY).setAnimal(animal);
+                    animal.setX(newX);
+                    animal.setY(newY);
+                }
             }
         }
     }
@@ -393,19 +395,19 @@ public class Simulation {
         ArrayNode factsArray = MAPPER.createArrayNode();
 
         Map<String, List<String>> db = robot.getDatabase();
+        for (Map.Entry<String, List<String>> entry : db.entrySet()) {
+            String topic = entry.getKey();
+            List<String> facts = entry.getValue();
 
-        for (String topic : robot.getInventory()) {
-            if (db.containsKey(topic)) {
-                ObjectNode factNode = MAPPER.createObjectNode();
-                factNode.put("topic", topic);
+            ObjectNode factNode = MAPPER.createObjectNode();
+            factNode.put("topic", topic);
 
-                ArrayNode subjectArray = MAPPER.createArrayNode();
-                for (String fact : db.get(topic)) {
-                    subjectArray.add(fact);
-                }
-                factNode.set("facts", subjectArray);
-                factsArray.add(factNode);
+            ArrayNode subjectArray = MAPPER.createArrayNode();
+            for (String fact : facts) {
+                subjectArray.add(fact);
             }
+            factNode.set("facts", subjectArray);
+            factsArray.add(factNode);
         }
         output.set("output", factsArray);
         return output;
@@ -448,17 +450,21 @@ public class Simulation {
                 section.add(i);
                 section.add(j);
                 cellNode.set("section", section);
-
+                // System.out.print("X: " + cell.getX() + " Y: " + cell.getY() + " ");
                 int objectCount = 0;
                 if (cell.getPlant() != null) {
+                    // System.out.print("Plant: " + cell.getPlant().getName() + " ");
                     objectCount++;
                 }
                 if (cell.getAnimal() != null) {
+                    // System.out.print("Animal: " + cell.getAnimal().getName() + " ");
                     objectCount++;
                 }
                 if (cell.getWater() != null) {
+                    // System.out.print("Water: " + cell.getWater().getName());
                     objectCount++;
                 }
+                // System.out.println();
                 cellNode.put("totalNrOfObjects", objectCount);
 
                 cellNode.put("airQuality", interpretQuality(cell.getAir().airQualityScore(currentTimestamp)));

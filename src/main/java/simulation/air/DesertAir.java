@@ -41,15 +41,13 @@ public class DesertAir extends Air {
         if (currentTimestamp >= weatherEffectEndTimestamp) {
             desertStorm = false;
         }
-
         double score = (oxygenLevel * 2) - (dustParticles * 0.2) - (temperature * 0.3);
-
+        double baseScore = Math.max(0, Math.min(100, score));
         if (currentTimestamp < weatherEffectEndTimestamp) {
-            score += weatherEffectValue;
+            baseScore += weatherEffectValue;
         }
-
-        double normalizeScore = Math.max(0, Math.min(100, score));
-        return Entity.round(normalizeScore);
+        double finalScore = Math.max(0, Math.min(100, baseScore));
+        return Entity.round(finalScore);
     }
 
     @Override

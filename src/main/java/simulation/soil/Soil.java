@@ -9,10 +9,10 @@ public abstract class Soil extends Entity {
     public Soil(String name, double mass, double nitrogen, double waterRetention,
                 double soilpH, double organicMatter) {
         super(name, mass);
-        this.nitrogen = nitrogen;
-        this.waterRetention = waterRetention;
-        this.soilpH = soilpH;
-        this.organicMatter = organicMatter;
+        this.nitrogen = Entity.round(nitrogen);
+        this.waterRetention = Entity.round(waterRetention);
+        this.soilpH = Entity.round(soilpH);
+        this.organicMatter = Entity.round(organicMatter);
     }
     protected double nitrogen;
     protected double waterRetention;
@@ -51,9 +51,9 @@ public abstract class Soil extends Entity {
         double normalized = Math.max(0, Math.min(100, organicMatter));
         organicMatter = Entity.round(normalized);
     }
-    public void tryToGrowPlant(Plant plant) {
+    public void tryToGrowPlant(Plant plant, int currentTimestamp) {
         if (plant != null && plant.scanned) {
-            plant.grow(0.2);
+            plant.grow(0.2,   currentTimestamp);
         }
     }
     public void addWaterRetention(double amount) {

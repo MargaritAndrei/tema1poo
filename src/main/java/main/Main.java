@@ -50,11 +50,18 @@ public class Main {
 
         Simulation currentSimulation = null;
         int simulationIndex = 0;
+        int lastTimestamp = 0;
         for (CommandInput command : commands) {
             int currentTimestamp = command.getTimestamp();
-            if (currentSimulation != null && !command.getCommand().equals("startSimulation")) {
-                currentSimulation.evolveEnvironment(currentTimestamp);
+            if (currentSimulation != null) {
+                for (int t = lastTimestamp + 1; t <= currentTimestamp; t++) {
+                    if (t == 1 && command.getCommand().equals("startSimulation")) {
+                        continue;
+                    }
+                    currentSimulation.evolveEnvironment(t);
+                }
             }
+            lastTimestamp = currentTimestamp;
             ObjectNode commandOutput = MAPPER.createObjectNode();
             commandOutput.put("command", command.getCommand());
 

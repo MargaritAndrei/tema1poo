@@ -1,5 +1,6 @@
 package simulation;
 
+import simulation.plant.MaturityState;
 import simulation.soil.Soil;
 import simulation.air.Air;
 import simulation.plant.Plant;
@@ -87,17 +88,22 @@ public class Cell {
         if (animal != null && animal.scanned) {
             animal.updateState(air, currentTimestamp);
         }
-        soil.tryToGrowPlant(plant);
+        soil.tryToGrowPlant(plant, currentTimestamp);
+        if (plant != null && plant.getMaturityState() == MaturityState.dead) {
+            this.plant = null;
+        }
         if (water != null && water.scanned) {
             soil.tryToAbsorbWater(water, currentTimestamp);
             water.tryToInteractWithAir(air, currentTimestamp);
-            water.tryToGrowPlant(plant);
+            water.tryToGrowPlant(plant, currentTimestamp);
+        }
+        if (plant != null && plant.getMaturityState() == MaturityState.dead) {
+            this.plant = null;
         }
         if (plant != null && plant.scanned) {
             air.addOxygen(plant.calculateOxygenProduction());
         }
         if (animal != null && animal.scanned) {
-            animal.produceFertilizer(soil);
             animal.tryToFeed(this);
         }
     }

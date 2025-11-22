@@ -7,7 +7,7 @@ public class DesertSoil extends Soil {
     public DesertSoil(String name, double mass, double nitrogen, double waterRetention,
                       double soilpH, double organicMatter, double salinity) {
         super(name, mass, nitrogen, waterRetention, soilpH, organicMatter);
-        this.salinity = salinity;
+        this.salinity = Entity.round(salinity);
     }
     protected double salinity;
     public double getSalinity() {

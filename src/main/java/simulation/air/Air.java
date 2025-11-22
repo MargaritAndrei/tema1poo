@@ -13,8 +13,8 @@ public abstract class Air extends Entity {
     public Air(String name, double mass, double humidity,
                double temperature, double oxygenLevel) {
         super(name, mass);
-        this.humidity = humidity;
-        this.temperature = temperature;
+        this.humidity = Entity.round(humidity);
+        this.temperature = Entity.round(temperature);
         this.oxygenLevel = oxygenLevel;
         this.weatherEffectValue = 0.0;
         this.weatherEffectEndTimestamp = 0;
@@ -39,13 +39,11 @@ public abstract class Air extends Entity {
     }
     public void addOxygen(double amount) {
         oxygenLevel += amount;
-        double normalized = Math.max(0, Math.min(100, oxygenLevel));
-        oxygenLevel = Entity.round(normalized);
+        oxygenLevel = Entity.round(oxygenLevel);
     }
     public void addHumidity(double amount) {
         humidity += amount;
-        double normalized = Math.max(0, Math.min(100, humidity));
-        humidity = Entity.round(normalized);
+        humidity = Entity.round(humidity);
     }
     public abstract boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp);
     public abstract double airQualityScore(int currentTimestamp);

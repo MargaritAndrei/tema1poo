@@ -5,7 +5,7 @@ public abstract class Entity {
     private double mass;
     public Entity(String name, double mass) {
         this.name = name;
-        this.mass = mass;
+        this.mass = Entity.round(mass);
     }
     public String getName() {
         return name;

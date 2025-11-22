@@ -8,7 +8,7 @@ public class SwampSoil extends Soil {
     public SwampSoil(String name, double mass, double nitrogen, double waterRetention,
                      double soilpH, double organicMatter, double waterLogging) {
         super(name, mass, nitrogen, waterRetention, soilpH, organicMatter);
-        this.waterLogging = waterLogging;
+        this.waterLogging = Entity.round(waterLogging);
     }
     public double getWaterLogging() {
         return waterLogging;

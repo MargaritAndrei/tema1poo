@@ -8,7 +8,7 @@ public class TundraSoil extends Soil {
     public TundraSoil(String name, double mass, double nitrogen, double waterRetention,
                       double soilpH, double organicMatter, double permafrostDepth) {
         super(name, mass, nitrogen, waterRetention, soilpH, organicMatter);
-        this.permafrostDepth = permafrostDepth;
+        this.permafrostDepth = Entity.round(permafrostDepth);
     }
     public double getPermafrostDepth() {
         return permafrostDepth;

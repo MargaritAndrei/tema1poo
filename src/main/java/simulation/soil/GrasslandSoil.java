@@ -8,7 +8,7 @@ public class GrasslandSoil extends Soil {
     public GrasslandSoil(String name, double mass, double nitrogen, double waterRetention,
                          double soilpH, double organicMatter, double rootDensity) {
         super(name, mass, nitrogen, waterRetention, soilpH, organicMatter);
-        this.rootDensity = rootDensity;
+        this.rootDensity = Entity.round(rootDensity);
     }
     public double getRootDensity() {
         return rootDensity;
