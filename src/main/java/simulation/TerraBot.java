@@ -7,7 +7,7 @@ import simulation.water.Water;
 
 import java.util.*;
 
-public class TerraBot {
+public final class TerraBot {
     public TerraBot(int initialEnergy) {
         energy = initialEnergy;
         x = 0;
