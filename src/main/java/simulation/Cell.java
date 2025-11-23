@@ -92,7 +92,7 @@ public class Cell {
         if (plant != null && plant.getMaturityState() == MaturityState.dead) {
             this.plant = null;
         }
-        if (water != null && water.scanned) {
+        if (water != null && water.isScanned()) {
             soil.tryToAbsorbWater(water, currentTimestamp);
             water.tryToInteractWithAir(air, currentTimestamp);
             water.tryToGrowPlant(plant, currentTimestamp);
@@ -100,7 +100,7 @@ public class Cell {
         if (plant != null && plant.getMaturityState() == MaturityState.dead) {
             this.plant = null;
         }
-        if (plant != null && plant.scanned) {
+        if (plant != null && plant.isScanned()) {
             air.addOxygen(plant.calculateOxygenProduction());
         }
         if (animal != null && animal.scanned) {

@@ -97,10 +97,10 @@ public class TerraBot {
         }
         if (color.equals("none") && smell.equals("none") && sound.equals("none")) {
             Water water = currentCell.getWater();
-            if (water != null && !water.scanned) {
+            if (water != null && !water.isScanned()) {
                 spendEnergy(7);
 
-                water.scanned = true;
+                water.setScanned(true);
                 water.setScanTimestamp(currentTimestamp);
                 currentCell.getSoil().setScanTimestamp(currentTimestamp);
 
@@ -111,10 +111,10 @@ public class TerraBot {
 
         if (!color.equals("none") && !smell.equals("none") && sound.equals("none")) {
             Plant plant = currentCell.getPlant();
-            if (plant != null && !plant.scanned) {
+            if (plant != null && !plant.isScanned()) {
                 spendEnergy(7);
 
-                plant.scanned = true;
+                plant.setScanned(true);
                 inventory.add(plant.getName());
                 return "The scanned object is a plant.";
             }

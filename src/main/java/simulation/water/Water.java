@@ -6,17 +6,37 @@ import simulation.plant.Plant;
 
 import static java.lang.Math.abs;
 
-public class Water extends Entity {
+public final class Water extends Entity {
     protected String type;
     protected double salinity;
     protected double ph;
     protected double purity;
     protected double turbidity;
     protected double contaminantIndex;
-    public boolean isFrozen, scanned;
+    protected boolean isFrozen, scanned;
     protected int lastInteractionTimestamp;
-    public Water(String name, double mass, String type, double salinity, double ph,
-                 double purity, double turbidity, double contaminantIndex, boolean isFrozen) {
+
+    private static final double HUMIDITY_ADDED_VALUE = 0.1;
+    private static final double PLANT_GROWTH_FACTOR = 0.2;
+
+    private static final double MAX_PERCENT_VALUE = 100.0;
+    private static final double IDEAL_PH = 7.5;
+    private static final double MAX_PH_DEVIATION = 7.5;
+    private static final double MAX_SALINITY = 350.0;
+    private static final double MAX_TURBIDITY = 100.0;
+    private static final double MAX_CONTAMINANT_INDEX = 100.0;
+
+    private static final double WEIGHT_PURITY = 0.3;
+    private static final double WEIGHT_PH = 0.2;
+    private static final double WEIGHT_SALINITY = 0.15;
+    private static final double WEIGHT_TURBIDITY = 0.1;
+    private static final double WEIGHT_CONTAMINANT = 0.15;
+    private static final double WEIGHT_FROZEN = 0.2;
+    private static final double TOTAL_WEIGHT_MULTIPLIER = 100.0;
+
+    public Water(final String name, final double mass, final String type, final double salinity,
+                 final double ph, final double purity, final double turbidity,
+                 final double contaminantIndex, final boolean isFrozen) {
         super(name, mass);
         scanned = false;
         this.type = type;
@@ -45,33 +65,55 @@ public class Water extends Entity {
     public double getContaminantIndex() {
         return  contaminantIndex;
     }
-    public void setScanTimestamp(int timestamp) {
-        lastInteractionTimestamp = timestamp ;
+    public boolean isFrozen() {
+        return isFrozen;
     }
-    public void tryToInteractWithAir(Air air, int currentTimestamp) {
+    public boolean isScanned() {
+        return scanned;
+    }
+    public void setFrozen(final boolean frozen) {
+        isFrozen = frozen;
+    }
+    public void setScanned(final boolean scanned) {
+        this.scanned = scanned;
+    }
+    public void setScanTimestamp(final int timestamp) {
+        lastInteractionTimestamp = timestamp;
+    }
+    /**
+     Proceseaza interactiunea cu aerul.
+     */
+    public void tryToInteractWithAir(final Air air, final int currentTimestamp) {
         if (currentTimestamp - lastInteractionTimestamp >= 2) {
             lastInteractionTimestamp = currentTimestamp;
-            air.addHumidity(0.1);
+            air.addHumidity(HUMIDITY_ADDED_VALUE);
         }
     }
-    public void tryToGrowPlant(Plant plant, int currentTimestamp) {
-        if (plant != null && plant.scanned) {
-            plant.grow(0.2,  currentTimestamp);
+    /**
+     Proceseaza interactiunea cu planta.
+     */
+    public void tryToGrowPlant(final Plant plant, final int currentTimestamp) {
+        if (plant != null && plant.isScanned()) {
+            plant.grow(PLANT_GROWTH_FACTOR,  currentTimestamp);
         }
     }
+    /**
+     * Calculeaza un scor de calitate generala a apei bazat pe proprietatile sale.
+     */
     public double calculateQuality() {
-        double purity_score = purity / 100;
-        double pH_score = 1 - abs(ph - 7.5) / 7.5;
-        double salinity_score = 1 - (salinity / 350);
-        double turbidity_score = 1 - (turbidity / 100);
-        double contaminant_score = 1 - (contaminantIndex / 100);
-        double frozen_score = isFrozen ? 0 : 1;
-        double quality = (0.3 * purity_score
-                + 0.2 * pH_score
-                + 0.15 * salinity_score
-                + 0.1 * turbidity_score
-                + 0.15 * contaminant_score
-                + 0.2 * frozen_score) * 100;
+        double purityScore = purity / MAX_PERCENT_VALUE;
+        double phScore = 1.0 - abs(ph - IDEAL_PH) / MAX_PH_DEVIATION;
+        double salinityScore = 1.0 - (salinity / MAX_SALINITY);
+        double turbidityScore = 1.0 - (turbidity / MAX_TURBIDITY);
+        double contaminantScore = 1.0 - (contaminantIndex / MAX_CONTAMINANT_INDEX);
+        double frozenScore = isFrozen ? 0.0 : 1.0;
+        double quality = (WEIGHT_PURITY * purityScore
+                + WEIGHT_PH * phScore
+                + WEIGHT_SALINITY * salinityScore
+                + WEIGHT_TURBIDITY * turbidityScore
+                + WEIGHT_CONTAMINANT * contaminantScore
+                + WEIGHT_FROZEN * frozenScore) * TOTAL_WEIGHT_MULTIPLIER;
+
         return Entity.round(quality);
     }
 }

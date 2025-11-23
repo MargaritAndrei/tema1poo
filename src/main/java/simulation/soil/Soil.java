@@ -38,7 +38,7 @@ public abstract class Soil extends Entity {
         lastWaterAbsorptionTimestamp = timestamp;
     }
     public void tryToAbsorbWater(Water water, int currentTimestamp) {
-        if (water != null && water.scanned) {
+        if (water != null && water.isScanned()) {
             if (currentTimestamp - lastWaterAbsorptionTimestamp >= 2) {
                 waterRetention += 0.1;
                 waterRetention = Entity.round(waterRetention);
@@ -52,7 +52,7 @@ public abstract class Soil extends Entity {
         organicMatter = Entity.round(normalized);
     }
     public void tryToGrowPlant(Plant plant, int currentTimestamp) {
-        if (plant != null && plant.scanned) {
+        if (plant != null && plant.isScanned()) {
             plant.grow(0.2,   currentTimestamp);
         }
     }

@@ -83,7 +83,7 @@ public abstract class Animal extends Entity {
                 if (animal != null && !isPredator()) {
                     continue;
                 }
-                if (plant != null && water != null && plant.scanned && water.scanned) {
+                if (plant != null && water != null && plant.isScanned() && water.isScanned()) {
                     if (candidateCell.getWater().calculateQuality() > bestWaterQuality) {
                         bestWaterQuality = candidateCell.getWater().calculateQuality();
                         moveCell = candidateCell;
@@ -108,7 +108,7 @@ public abstract class Animal extends Entity {
                 if (animal != null && !isPredator()) {
                     continue;
                 }
-                if (plant != null && plant.scanned) {
+                if (plant != null && plant.isScanned()) {
                     if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
                         System.out.println(getName() + " moved to cell " + "(" +
                                 candidateCell.getX() + ", " + candidateCell.getY() + ")" +
@@ -129,7 +129,7 @@ public abstract class Animal extends Entity {
                 if (animal != null && !isPredator()) {
                     continue;
                 }
-                if (water != null && water.scanned &&
+                if (water != null && water.isScanned() &&
                         water.calculateQuality() > bestWaterQuality) {
                     bestWaterQuality = candidateCell.getWater().calculateQuality();
                     moveCell = candidateCell;
@@ -171,8 +171,8 @@ public abstract class Animal extends Entity {
         Plant plant = currentCell.getPlant();
         Animal prey = currentCell.getAnimal();
         Soil soil = currentCell.getSoil();
-        boolean plantScanned = (plant != null && plant.scanned);
-        boolean waterScanned = (water != null && water.scanned);
+        boolean plantScanned = (plant != null && plant.isScanned());
+        boolean waterScanned = (water != null && water.isScanned());
         if (isPredator() && prey != null && prey != this) {
             setMass(getMass() + prey.getMass());
             fertilizerToProduce = 0.5;
