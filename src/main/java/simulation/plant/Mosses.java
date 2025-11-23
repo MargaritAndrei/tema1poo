@@ -1,15 +1,17 @@
 package simulation.plant;
 
-public class Mosses extends Plant {
-    public Mosses(String name, double mass) {
+public final class Mosses extends Plant {
+    private static final double OXYGEN = 0.8;
+    private static final double PLANT_POSSIBILITY = 40.0;
+    public Mosses(final String name, final double mass) {
         super(name, mass);
     }
     @Override
     protected double categoryOxygen() {
-        return 0.8;
+        return OXYGEN;
     }
     @Override
     public double plantPossibility() {
-        return 40;
+        return PLANT_POSSIBILITY;
     }
 }
