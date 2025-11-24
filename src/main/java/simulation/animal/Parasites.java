@@ -1,7 +1,8 @@
 package simulation.animal;
 
-public class Parasites extends Animal {
-    public Parasites(String name, double mass) {
+public final class Parasites extends Animal {
+    private static final double PARASITE_POSSIBILITY_SCORE = 10.0;
+    public Parasites(final String name, final double mass) {
         super(name, mass);
     }
     @Override
@@ -10,6 +11,6 @@ public class Parasites extends Animal {
     }
     @Override
     public double animalPossibility() {
-        return 10;
+        return PARASITE_POSSIBILITY_SCORE;
     }
 }

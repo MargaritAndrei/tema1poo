@@ -4,59 +4,83 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.CommandInput;
 import simulation.Entity;
 
-public class DesertAir extends Air {
-    protected double dustParticles;
-    protected boolean desertStorm;
+public final class DesertAir extends Air {
+    private static final double DESERT_STORM_PENALTY = 30.0;
+    private static final double DUST_PARTICLES_WEIGHT = 0.2;
+    private static final double TEMPERATURE_WEIGHT = 0.3;
+    private static final double MAX_SCORE_LIMIT = 100.0;
+    private static final double MAX_DESERT_AIR_SCORE = 65.0;
 
-    public DesertAir(String name, double mass, double humidity,
-                     double temperature, double oxygenLevel, double dustParticles) {
+    private final double dustParticles;
+    private boolean desertStorm;
+
+    public DesertAir(final String name, final double mass, final double humidity,
+                     final double temperature, final double oxygenLevel,
+                     final double dustParticles) {
         super(name, mass, humidity, temperature, oxygenLevel);
-        this.dustParticles = dustParticles;
+        this.dustParticles = Entity.round(dustParticles);
         this.desertStorm = false;
     }
 
+    /**
+     * Retrieves the current dust particles level in the air.
+     * @return The dust particles level.
+     */
     public double getDustParticles() {
         return dustParticles;
     }
 
+    /**
+     * Checks if a desert storm weather event is currently active.
+     * @return True if a desert storm is active, false otherwise.
+     */
     public boolean isDesertStorm() {
         return desertStorm;
     }
 
+    /**
+     * Schimba vremea, returneaza true daca s-a schimbat, altfel returneaza false.
+     */
     @Override
-    public boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp) {
+    public boolean handleWeatherEvent(final CommandInput cmd, final int currentTimestamp) {
         if (cmd.getType().equals("desertStorm")) {
             desertStorm = cmd.isDesertStorm();
-
-            double penalty = -(desertStorm ? 30.0 : 0.0);
+            final double penalty = -(desertStorm ? DESERT_STORM_PENALTY : 0.0);
             weatherEffectValue = Entity.round(penalty);
             weatherEffectEndTimestamp = currentTimestamp + 2;
             return true;
         }
         return false;
     }
-
+    /**
+     * Calculeaza calitatea aerului.
+     */
     @Override
-    public double airQualityScore(int currentTimestamp) {
+    public double airQualityScore(final int currentTimestamp) {
         if (currentTimestamp >= weatherEffectEndTimestamp) {
             desertStorm = false;
         }
-        double score = (oxygenLevel * 2) - (dustParticles * 0.2) - (temperature * 0.3);
-        double baseScore = Math.max(0, Math.min(100, score));
+        double score = (oxygenLevel * 2) - (dustParticles * DUST_PARTICLES_WEIGHT)
+                - (temperature * TEMPERATURE_WEIGHT);
+        double baseScore = Math.max(0, Math.min(MAX_SCORE_LIMIT, score));
         if (currentTimestamp < weatherEffectEndTimestamp) {
             baseScore += weatherEffectValue;
         }
-        double finalScore = Math.max(0, Math.min(100, baseScore));
+        double finalScore = Math.max(0, Math.min(MAX_SCORE_LIMIT, baseScore));
         return Entity.round(finalScore);
     }
-
+    /**
+     * Returneaza maxScore.
+     */
     @Override
     protected double maxScore() {
-        return 65;
+        return MAX_DESERT_AIR_SCORE;
     }
-
+    /**
+     * Adauga campurile specifice tipului de aer in output.
+     */
     @Override
-    public void addSpecificFieldsToJson(ObjectNode node) {
+    public void addSpecificFieldsToJson(final ObjectNode node) {
         node.put("desertStorm", desertStorm);
     }
 }

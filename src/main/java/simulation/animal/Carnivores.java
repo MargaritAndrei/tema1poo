@@ -1,7 +1,8 @@
 package simulation.animal;
 
-public class Carnivores extends Animal {
-    public Carnivores(String name, double mass) {
+public final class Carnivores extends Animal {
+    private static final double CARNIVORE_POSSIBILITY_SCORE = 30.0;
+    public Carnivores(final String name, final double mass) {
         super(name, mass);
     }
     @Override
@@ -10,6 +11,6 @@ public class Carnivores extends Animal {
     }
     @Override
     public double animalPossibility() {
-        return 30;
+        return CARNIVORE_POSSIBILITY_SCORE;
     }
 }

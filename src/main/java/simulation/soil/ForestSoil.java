@@ -3,30 +3,61 @@ package simulation.soil;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import simulation.Entity;
 
-public class ForestSoil extends Soil {
-    public ForestSoil(String name, double mass, double nitrogen, double waterRetention,
-                      double soilpH, double organicMatter, double leafLitter) {
+public final class ForestSoil extends Soil {
+    private static final double NITROGEN_QUALITY_WEIGHT = 1.2;
+    private static final double ORGANIC_MATTER_QUALITY_WEIGHT = 2.0; // Valoare din codul original
+    private static final double WATER_RETENTION_QUALITY_WEIGHT = 1.5;
+    private static final double LEAF_LITTER_QUALITY_WEIGHT = 0.3;
+    private static final double MAX_PERCENTAGE_VALUE = 100.0;
+
+    private static final double WATER_RETENTION_BLOCK_WEIGHT = 0.6;
+    private static final double LEAF_LITTER_BLOCK_WEIGHT = 0.4;
+    private static final double BLOCK_PROBABILITY_DIVISOR = 80.0;
+    private static final double BLOCK_PROBABILITY_MULTIPLIER = 100.0;
+
+    private final double leafLitter;
+
+    public ForestSoil(final String name, final double mass, final double nitrogen,
+                      final double waterRetention, final double soilpH,
+                      final double organicMatter, final double leafLitter) {
         super(name, mass, nitrogen, waterRetention, soilpH, organicMatter);
         this.leafLitter = Entity.round(leafLitter);
     }
-    protected double leafLitter;
+
     public double getLeafLitter() {
         return leafLitter;
     }
+
+    /**
+     * Calculeaza calitatea solului.
+     */
     @Override
     public double calculateQuality() {
-        double score = nitrogen * 1.2 + organicMatter * 2 + waterRetention * 1.5 + leafLitter * 0.3;
-        double normalizeScore = Math.max(0, Math.min(100, score));
+        double score = (nitrogen * NITROGEN_QUALITY_WEIGHT) + (organicMatter
+                * ORGANIC_MATTER_QUALITY_WEIGHT) + (waterRetention * WATER_RETENTION_QUALITY_WEIGHT)
+                + (leafLitter * LEAF_LITTER_QUALITY_WEIGHT);
+
+        final double normalizeScore = Math.max(0, Math.min(MAX_PERCENTAGE_VALUE, score));
         return Entity.round(normalizeScore);
     }
+
+    /**
+     * Calculeaza blockProbability.
+     */
     @Override
     public double calculateBlockProbability() {
-        double score = (waterRetention * 0.6 + leafLitter * 0.4) / 80 * 100;
-        double normalizeScore = Math.max(0, Math.min(100, score));
+        double score = (waterRetention * WATER_RETENTION_BLOCK_WEIGHT
+                + leafLitter * LEAF_LITTER_BLOCK_WEIGHT)
+                / BLOCK_PROBABILITY_DIVISOR * BLOCK_PROBABILITY_MULTIPLIER;
+        final double normalizeScore = Math.max(0, Math.min(MAX_PERCENTAGE_VALUE, score));
         return Entity.round(normalizeScore);
     }
+
+    /**
+     * Adauga campurile specifice in output-ul json.
+     */
     @Override
-    public void addSpecificFieldsToJson(ObjectNode node) {
+    public void addSpecificFieldsToJson(final ObjectNode node) {
         node.put("leafLitter", getLeafLitter());
     }
 }

@@ -1,25 +1,33 @@
 package simulation;
 
 public abstract class Entity {
+    private static final double ROUNDING_FACTOR = 100.0;
+
     private String name;
     private double mass;
-    public Entity(String name, double mass) {
+
+    public Entity(final String name, final double mass) {
         this.name = name;
         this.mass = Entity.round(mass);
     }
-    public String getName() {
+    public final String getName() {
         return name;
     }
-    public double getMass() {
+    public final double getMass() {
         return mass;
     }
-    public void setName(String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
-    public void setMass(double mass) {
+    public final void setMass(final double mass) {
         this.mass = Entity.round(mass);
     }
-    public static double round(double value) {
-        return Math.round(value * 100.0) / 100.0;
+
+    /**
+     * Functie de rotunjire: implementeaza Math.round cu
+     * parametrii din enunt.
+     */
+    public static double round(final double value) {
+        return Math.round(value * ROUNDING_FACTOR) / ROUNDING_FACTOR;
     }
 }

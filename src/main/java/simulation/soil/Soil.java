@@ -6,59 +6,97 @@ import simulation.water.Water;
 import simulation.plant.Plant;
 
 public abstract class Soil extends Entity {
-    public Soil(String name, double mass, double nitrogen, double waterRetention,
-                double soilpH, double organicMatter) {
+    private static final double MAX_PERCENTAGE_VALUE = 100.0;
+    private static final int WATER_ABSORPTION_INTERVAL = 2;
+    private static final double WATER_ABSORPTION_AMOUNT = 0.1;
+    private static final double DEFAULT_GROWTH_FACTOR = 0.2;
+
+    protected double nitrogen;
+    protected double waterRetention;
+    protected double soilpH;
+    protected double organicMatter;
+    protected int lastWaterAbsorptionTimestamp;
+
+    public Soil(final String name, final double mass, final double nitrogen,
+                final double waterRetention, final double soilpH, final double organicMatter) {
         super(name, mass);
         this.nitrogen = Entity.round(nitrogen);
         this.waterRetention = Entity.round(waterRetention);
         this.soilpH = Entity.round(soilpH);
         this.organicMatter = Entity.round(organicMatter);
     }
-    protected double nitrogen;
-    protected double waterRetention;
-    protected double soilpH;
-    protected double organicMatter;
-    protected int lastWaterAbsorptionTimestamp;
+    /**
+     * Calculeaza calitatea solului.
+     */
     public abstract double calculateQuality();
+    /**
+     * Calculeaza probabilitatea de a bloca TerraBot.
+     */
     public abstract double calculateBlockProbability();
+    /**
+     * Adauga campurile specifice tipului de sol in output.
+     */
     public abstract void addSpecificFieldsToJson(ObjectNode node);
-    public double getNitrogen() {
+    public final double getNitrogen() {
         return nitrogen;
     }
-    public double getWaterRetention() {
+
+    public final double getWaterRetention() {
         return waterRetention;
     }
-    public double getSoilpH() {
+
+    public final double getSoilpH() {
         return soilpH;
     }
-    public double getOrganicMatter() {
+
+    public final double getOrganicMatter() {
         return organicMatter;
     }
-    public void setScanTimestamp(int timestamp) {
+    /**
+     * Seteaza timestampul momentului scanarii solului de catre TerraBot.
+     */
+    public void setScanTimestamp(final int timestamp) {
         lastWaterAbsorptionTimestamp = timestamp;
     }
-    public void tryToAbsorbWater(Water water, int currentTimestamp) {
+
+    /**
+     * Interactiunea cu apa
+     */
+    public void tryToAbsorbWater(final Water water, final int currentTimestamp) {
         if (water != null && water.isScanned()) {
-            if (currentTimestamp - lastWaterAbsorptionTimestamp >= 2) {
-                waterRetention += 0.1;
+            if (currentTimestamp - lastWaterAbsorptionTimestamp >= WATER_ABSORPTION_INTERVAL) {
+                waterRetention += WATER_ABSORPTION_AMOUNT;
                 waterRetention = Entity.round(waterRetention);
                 lastWaterAbsorptionTimestamp = currentTimestamp;
             }
         }
     }
-    public void addOrganicMatter(double amount) {
+
+    /**
+     * Adauga amount la campul organicMatter.
+     */
+    public void addOrganicMatter(final double amount) {
         organicMatter += amount;
-        double normalized = Math.max(0, Math.min(100, organicMatter));
+        final double normalized = Math.max(0, Math.min(MAX_PERCENTAGE_VALUE, organicMatter));
         organicMatter = Entity.round(normalized);
     }
-    public void tryToGrowPlant(Plant plant, int currentTimestamp) {
+
+    /**
+     * Interactiunea cu planta.
+     */
+    public void tryToGrowPlant(final Plant plant, final int currentTimestamp) {
         if (plant != null && plant.isScanned()) {
-            plant.grow(0.2,   currentTimestamp);
+            // Folosind constanta
+            plant.grow(DEFAULT_GROWTH_FACTOR, currentTimestamp);
         }
     }
-    public void addWaterRetention(double amount) {
+
+    /**
+     * Adauga amount la waterRentention.
+     */
+    public void addWaterRetention(final double amount) {
         waterRetention += amount;
-        double normalized = Math.max(0, Math.min(100, waterRetention));
+        final double normalized = Math.max(0, Math.min(MAX_PERCENTAGE_VALUE, waterRetention));
         waterRetention = Entity.round(normalized);
     }
 }

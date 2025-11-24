@@ -209,7 +209,7 @@ public final class Simulation {
             }
         }
         for (Animal animal : animalList) {
-            if (animal.scanned) {
+            if (animal.isScanned()) {
                 int oldX = animal.getX();
                 int oldY = animal.getY();
                 Cell newCell = animal.move(map, oldX, oldY, currentTimestamp);

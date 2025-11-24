@@ -9,54 +9,98 @@ import simulation.soil.Soil;
 import simulation.water.Water;
 
 public abstract class Animal extends Entity {
+    private static final double MAX_PERCENTAGE = 100.0;
+    private static final double ATTACK_RISK_DIVISOR = 10.0;
+    private static final double TOXICITY_THRESHOLD_MULTIPLIER = 0.8;
+    private static final int MIN_MOVE_INTERVAL = 2;
+    private static final int DIRECTION_COUNT = 4;
+    private static final double INITIAL_BEST_WATER_QUALITY = -2.0;
+    private static final double FERTILIZER_HALF_MASS_FACTOR = 0.5;
+    private static final double WATER_INTAKE_RATE = 0.08;
+    private static final double FERTILIZER_FULL_MASS_FACTOR = 0.8;
+
     protected AnimalState state;
-    public boolean scanned;
+    private boolean scanned;
     protected int lastMoveTimestamp;
-    protected int x, y;
+    protected int x;
+    protected int y;
     private double fertilizerToProduce;
-    public Animal(String name, double mass) {
+    public Animal(final String name, final double mass) {
         super(name, mass);
-        state = AnimalState.hungry;
-        scanned = false;
-        lastMoveTimestamp = 0;
-        fertilizerToProduce = 0;
+        this.state = AnimalState.hungry;
+        this.scanned = false;
+        this.lastMoveTimestamp = 0;
+        this.fertilizerToProduce = 0;
     }
+
     protected abstract boolean isPredator();
+
+    /**
+     * Returneaza posibilitatea specifica tipului de animal.
+     */
     public abstract double animalPossibility();
-    public int getX() {
+
+    public final int getX() {
         return x;
     }
-    public int getY() {
+    public final int getY() {
         return y;
     }
-    public void setX(int x) {
-        this.x = x;
+    public final void setX(final int newX) {
+        this.x = newX;
     }
-    public void setY(int y) {
-        this.y = y;
+    public final void setY(final int newY) {
+        this.y = newY;
     }
-    public double calculateAttackRisk() {
-        double score = (100 - animalPossibility()) / 10.0;
-        double normalizeScore = Math.max(0, Math.min(100, score));
+    public final boolean isScanned() {
+        return scanned;
+    }
+    public final void setScanned(final boolean scannedStatus) {
+        this.scanned = scannedStatus;
+    }
+
+    /**
+     * Calculeaza posiblitatea de a ataca Terrabot.
+     */
+    public final double calculateAttackRisk() {
+        double score = (MAX_PERCENTAGE - animalPossibility()) / ATTACK_RISK_DIVISOR;
+        final double normalizeScore = Math.max(0, Math.min(MAX_PERCENTAGE, score));
         return Entity.round(normalizeScore);
     }
-    public void setLastMoveTimestamp(int timestamp) {
+
+    public final void setLastMoveTimestamp(final int timestamp) {
         lastMoveTimestamp = timestamp;
     }
-    public void produceFertilizer(Soil soil) {
+
+    /**
+     * Interactiunea dintre animal si sol: animalul fertilizeaza solul dupa
+     * ce se hraneste.
+     */
+    public final void produceFertilizer(final Soil soil) {
         soil.addOrganicMatter(fertilizerToProduce);
         fertilizerToProduce = 0;
     }
-    public void updateState(Air currentAir, int currentTimestamp) {
-        double toxicThreshold = 0.8 * currentAir.getMaxScore();
-        double toxicity = currentAir.calculateToxicity(currentTimestamp);
+
+    /**
+     * Interactiunea dintre animal si aer: animalul se imbolnaveste daca
+     * aerul este toxic.
+     */
+    public final void updateState(final Air currentAir, final int currentTimestamp) {
+        final double toxicThreshold = TOXICITY_THRESHOLD_MULTIPLIER * currentAir.getMaxScore();
+        final double toxicity = currentAir.calculateToxicity(currentTimestamp);
         if (toxicity > toxicThreshold) {
             state = AnimalState.sick;
         } else if (state == AnimalState.sick) {
             state = AnimalState.hungry;
         }
     }
-    private Cell processMoveInteraction(Cell targetCell, int currentTimestamp) {
+
+    /**
+     * Proceseaza miscarea animalului: animalul incearca sa se miste pe
+     * patratica mancand animalul de pe acea patratica, daca animalul
+     * care se misca este pradator.
+     */
+    private Cell processMoveInteraction(final Cell targetCell, final int currentTimestamp) {
         tryToFeed(targetCell);
         if (targetCell.getAnimal() == null) {
             lastMoveTimestamp = currentTimestamp;
@@ -64,25 +108,34 @@ public abstract class Animal extends Entity {
         }
         return null;
     }
-    public Cell move(Table map, int x, int y, int currentTimestamp) {
-        if (!scanned || currentTimestamp - lastMoveTimestamp < 2) {
+
+    /**
+     * Miscarea animalului.
+     */
+    public final Cell move(final Table map, final int currentX, final int currentY,
+                           final int currentTimestamp) {
+        if (!scanned || currentTimestamp - lastMoveTimestamp < MIN_MOVE_INTERVAL) {
             return null;
         }
+
         Cell moveCell = null;
-        double bestWaterQuality = -1.0;
-        int dx[] = {0, 1, 0, -1};
-        int dy[] = {1, 0, -1, 0};
-        for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-            Cell candidateCell = map.getCell(newX, newY);
+        double bestWaterQuality = INITIAL_BEST_WATER_QUALITY;
+        final int[] dx = {0, 1, 0, -1};
+        final int[] dy = {1, 0, -1, 0};
+
+        for (int i = 0; i < DIRECTION_COUNT; i++) {
+            final int newX = currentX + dx[i];
+            final int newY = currentY + dy[i];
+            final Cell candidateCell = map.getCell(newX, newY);
             if (candidateCell != null) {
-                Plant plant = candidateCell.getPlant();
-                Water water = candidateCell.getWater();
-                Animal animal = candidateCell.getAnimal();
+                final Plant plant = candidateCell.getPlant();
+                final Water water = candidateCell.getWater();
+                final Animal animal = candidateCell.getAnimal();
+
                 if (animal != null && !isPredator()) {
                     continue;
                 }
+
                 if (plant != null && water != null && plant.isScanned() && water.isScanned()) {
                     if (candidateCell.getWater().calculateQuality() > bestWaterQuality) {
                         bestWaterQuality = candidateCell.getWater().calculateQuality();
@@ -91,124 +144,144 @@ public abstract class Animal extends Entity {
                 }
             }
         }
+
         if (moveCell != null) {
             if (processMoveInteraction(moveCell, currentTimestamp) != null) {
-                System.out.println(getName() + " moved to cell " + "(" +
-                        moveCell.getX() + ", " + moveCell.getY() + ")" + " at timestamp " + currentTimestamp);
+                System.out.println(getName() + " moved to cell "
+                        + "(" + moveCell.getX() + ", " + moveCell.getY() + ")"
+                        + " at timestamp " + currentTimestamp);
                 return moveCell;
             }
         }
-        for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-            Cell candidateCell = map.getCell(newX, newY);
+
+        for (int i = 0; i < DIRECTION_COUNT; i++) {
+            final int newX = currentX + dx[i];
+            final int newY = currentY + dy[i];
+            final Cell candidateCell = map.getCell(newX, newY);
             if (candidateCell != null) {
-                Plant plant = candidateCell.getPlant();
-                Animal animal  = candidateCell.getAnimal();
+                final Plant plant = candidateCell.getPlant();
+                final Animal animal = candidateCell.getAnimal();
+
                 if (animal != null && !isPredator()) {
                     continue;
                 }
+
                 if (plant != null && plant.isScanned()) {
                     if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
-                        System.out.println(getName() + " moved to cell " + "(" +
-                                candidateCell.getX() + ", " + candidateCell.getY() + ")" +
-                                " at timestamp " + currentTimestamp);
+                        System.out.println(getName() + " moved to cell "
+                                + "(" + candidateCell.getX() + ", " + candidateCell.getY() + ")"
+                                + " at timestamp " + currentTimestamp);
                         return candidateCell;
                     }
                 }
             }
         }
-        bestWaterQuality = -2.0;
-        for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-            Cell candidateCell = map.getCell(newX, newY);
+        bestWaterQuality = INITIAL_BEST_WATER_QUALITY;
+
+        for (int i = 0; i < DIRECTION_COUNT; i++) {
+            final int newX = currentX + dx[i];
+            final int newY = currentY + dy[i];
+            final Cell candidateCell = map.getCell(newX, newY);
             if (candidateCell != null) {
-                Water water = candidateCell.getWater();
-                Animal animal = candidateCell.getAnimal();
+                final Water water = candidateCell.getWater();
+                final Animal animal = candidateCell.getAnimal();
+
                 if (animal != null && !isPredator()) {
                     continue;
                 }
-                if (water != null && water.isScanned() &&
-                        water.calculateQuality() > bestWaterQuality) {
+                if (water != null && water.isScanned()
+                        && water.calculateQuality() > bestWaterQuality) {
                     bestWaterQuality = candidateCell.getWater().calculateQuality();
                     moveCell = candidateCell;
                 }
             }
         }
+
         if (moveCell != null) {
             if (processMoveInteraction(moveCell, currentTimestamp) != null) {
-                System.out.println(getName() + " moved to cell " + "(" +
-                        moveCell.getX() + ", " + moveCell.getY() + ")" + " at timestamp " + currentTimestamp);
+                System.out.println(getName() + " moved to cell "
+                        + "(" + moveCell.getX() + ", " + moveCell.getY() + ")"
+                        + " at timestamp " + currentTimestamp);
                 return moveCell;
             }
         }
-        for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-            Cell candidateCell = map.getCell(newX, newY);
+
+        for (int i = 0; i < DIRECTION_COUNT; i++) {
+            final int newX = currentX + dx[i];
+            final int newY = currentY + dy[i];
+            final Cell candidateCell = map.getCell(newX, newY);
             if (candidateCell != null) {
-                Animal animal = candidateCell.getAnimal();
+                final Animal animal = candidateCell.getAnimal();
+
                 if (animal != null && !isPredator()) {
                     continue;
                 }
+
                 if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
-                    System.out.println(getName() + " moved to cell " + "(" +
-                            candidateCell.getX() + ", " + candidateCell.getY() + ")" +
-                            " at timestamp " + currentTimestamp);
+                    System.out.println(getName() + " moved to cell "
+                            + "(" + candidateCell.getX() + ", " + candidateCell.getY() + ")"
+                            + " at timestamp " + currentTimestamp);
                     return candidateCell;
                 }
             }
         }
         return null;
     }
-    public void tryToFeed(Cell currentCell) {
+
+    /**
+     * Functia de hranire a animalului: daca se poate acesta se hraneste
+     * cu ce exista pe patratica curenta.
+     */
+    public final void tryToFeed(final Cell currentCell) {
         if (!scanned) {
             return;
         }
         state = AnimalState.well_fed;
-        Water water = currentCell.getWater();
-        Plant plant = currentCell.getPlant();
-        Animal prey = currentCell.getAnimal();
-        Soil soil = currentCell.getSoil();
-        boolean plantScanned = (plant != null && plant.isScanned());
-        boolean waterScanned = (water != null && water.isScanned());
+        final Water water = currentCell.getWater();
+        final Plant plant = currentCell.getPlant();
+        final Animal prey = currentCell.getAnimal();
+        final Soil soil = currentCell.getSoil();
+
+        final boolean plantScanned = (plant != null && plant.isScanned());
+        final boolean waterScanned = (water != null && water.isScanned());
+
         if (isPredator() && prey != null && prey != this) {
             setMass(getMass() + prey.getMass());
-            fertilizerToProduce = 0.5;
+            fertilizerToProduce = FERTILIZER_HALF_MASS_FACTOR;
             produceFertilizer(soil);
             currentCell.setAnimal(null);
             return;
         }
+
         if (plantScanned && waterScanned) {
             currentCell.setPlant(null);
-            double intakeRate = 0.08;
-            double waterToDrink = Math.min(getMass() * intakeRate, water.getMass());
+            final double waterToDrink = Math.min(getMass() * WATER_INTAKE_RATE, water.getMass());
             water.setMass(water.getMass() - waterToDrink);
             if (water.getMass() <= 0) {
                 currentCell.setWater(null);
             }
             setMass(getMass() + waterToDrink + plant.getMass());
-            fertilizerToProduce = 0.8;
+            fertilizerToProduce = FERTILIZER_FULL_MASS_FACTOR;
             produceFertilizer(soil);
             return;
         }
+
         if (plantScanned) {
             currentCell.setPlant(null);
             setMass(getMass() + plant.getMass());
-            fertilizerToProduce = 0.5;
+            fertilizerToProduce = FERTILIZER_HALF_MASS_FACTOR;
             produceFertilizer(soil);
             return;
         }
+
         if (waterScanned) {
-            double intakeRate = 0.08;
-            double waterToDrink = Math.min(getMass() * intakeRate, water.getMass());
+            final double waterToDrink = Math.min(getMass() * WATER_INTAKE_RATE, water.getMass());
             water.setMass(water.getMass() - waterToDrink);
             if (water.getMass() <= 0) {
                 currentCell.setWater(null);
             }
             setMass(getMass() + waterToDrink);
-            fertilizerToProduce = 0.5;
+            fertilizerToProduce = FERTILIZER_HALF_MASS_FACTOR;
             produceFertilizer(soil);
             return;
         }

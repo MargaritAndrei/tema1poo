@@ -13,46 +13,56 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * The entry point to this homework. It runs the checker that tests your implementation.
- */
-public class Main {
+public final class Main {
 
-    private Main(){
+    private Main() {
     }
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     public static final ObjectWriter WRITER = MAPPER.writer().withDefaultPrettyPrinter();
 
-    private static ObjectNode createErrorNode(String message) {
-        ObjectNode node = MAPPER.createObjectNode();
-        node.put("message", message);
-        return node;
-    }
-    private static ObjectNode createMessageNode(String message) {
+    /**
+     * Creeaza un JSON ce contine
+     * un mesaj de eroare.
+     */
+    private static ObjectNode createErrorNode(final String message) {
         ObjectNode node = MAPPER.createObjectNode();
         node.put("message", message);
         return node;
     }
 
+    /**
+     * Creeaza un JSON ce contine
+     * un mesaj normal.
+     */
+    private static ObjectNode createMessageNode(final String message) {
+        ObjectNode node = MAPPER.createObjectNode();
+        node.put("message", message);
+        return node;
+    }
+
+    /**
+     * Implementarea functiei Main, entrypoint-ul temei.
+     */
     public static void action(final String inputPath,
                               final String outputPath) throws IOException {
 
         InputLoader inputLoader = new InputLoader(inputPath);
         ArrayNode output = MAPPER.createArrayNode();
 
-        // luam simularile din inputloader, comenzile la fel, dupa luam fiecare simulare si comenzile
+        // luam simularile din inputloader, comenzile la fel, dupa luam fiecare
+        // simulare si comenzile
         // corespunzatoare simularii respective
         ArrayList<SimulationInput> simulations = inputLoader.getSimulations();
         ArrayList<CommandInput> commands = inputLoader.getCommands();
 
         // implementare main
-
         Simulation currentSimulation = null;
         int simulationIndex = 0;
         int lastTimestamp = 0;
-        for (CommandInput command : commands) {
-            int currentTimestamp = command.getTimestamp();
+
+        for (final CommandInput command : commands) {
+            final int currentTimestamp = command.getTimestamp();
             if (currentSimulation != null) {
                 for (int t = lastTimestamp + 1; t <= currentTimestamp; t++) {
                     if (t == 1 && command.getCommand().equals("startSimulation")) {
@@ -62,7 +72,7 @@ public class Main {
                 }
             }
             lastTimestamp = currentTimestamp;
-            ObjectNode commandOutput = MAPPER.createObjectNode();
+            final ObjectNode commandOutput = MAPPER.createObjectNode();
             commandOutput.put("command", command.getCommand());
 
             ObjectNode resultData = null;
@@ -70,9 +80,11 @@ public class Main {
             switch (command.getCommand()) {
                 case "startSimulation":
                     if (currentSimulation != null) {
-                        resultData = createErrorNode("ERROR: Simulation already started. Cannot perform action");
+                        resultData = createErrorNode(
+                                "ERROR: Simulation already started. Cannot perform action");
                     } else if (simulationIndex >= simulations.size()) {
-                        resultData = createErrorNode("ERROR: No simulation parameters left to start.");
+                        resultData = createErrorNode(
+                                "ERROR: No simulation parameters left to start.");
                     } else {
                         SimulationInput simData = simulations.get(simulationIndex);
                         currentSimulation = new Simulation(simData);
@@ -83,7 +95,8 @@ public class Main {
 
                 case "endSimulation":
                     if (currentSimulation == null) {
-                        resultData = createErrorNode("ERROR: Simulation not started. Cannot perform action");
+                        resultData = createErrorNode(
+                                "ERROR: Simulation not started. Cannot perform action");
                     } else {
                         currentSimulation = null;
                         resultData = createMessageNode("Simulation has ended.");
@@ -91,7 +104,8 @@ public class Main {
                     break;
                 default:
                     if (currentSimulation == null) {
-                        resultData = createErrorNode("ERROR: Simulation not started. Cannot perform action");
+                        resultData = createErrorNode(
+                                "ERROR: Simulation not started. Cannot perform action");
                     } else {
                         resultData = currentSimulation.dispatchCommand(command, currentTimestamp);
                     }
