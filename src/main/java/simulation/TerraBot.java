@@ -52,7 +52,11 @@ public final class TerraBot {
     public Map<String, List<String>> getDatabase() {
         return database;
     }
-
+    /**
+     * Checks if the robot is charging.
+     * @param currentTimestamp the current timestamp.
+     * @return true if the robot is charging, false otherwise.
+     */
     public boolean isCharging(final int currentTimestamp) {
         return currentTimestamp < chargeEndTime;
     }

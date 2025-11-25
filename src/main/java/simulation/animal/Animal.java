@@ -165,9 +165,9 @@ public abstract class Animal extends Entity {
 
         if (moveCell != null) {
             if (processMoveInteraction(moveCell, currentTimestamp) != null) {
-                System.out.println(getName() + " moved to cell "
-                        + "(" + moveCell.getX() + ", " + moveCell.getY() + ")"
-                        + " at timestamp " + currentTimestamp);
+                // System.out.println(getName() + " moved to cell "
+                //        + "(" + moveCell.getX() + ", " + moveCell.getY() + ")"
+                //        + " at timestamp " + currentTimestamp);
                 return moveCell;
             }
         }
@@ -186,9 +186,9 @@ public abstract class Animal extends Entity {
 
                 if (plant != null && plant.isScanned()) {
                     if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
-                        System.out.println(getName() + " moved to cell "
-                                + "(" + candidateCell.getX() + ", " + candidateCell.getY() + ")"
-                                + " at timestamp " + currentTimestamp);
+                        // System.out.println(getName() + " moved to cell "
+                        //        + "(" + candidateCell.getX() + ", " + candidateCell.getY() + ")"
+                        //        + " at timestamp " + currentTimestamp);
                         return candidateCell;
                     }
                 }
@@ -217,9 +217,9 @@ public abstract class Animal extends Entity {
 
         if (moveCell != null) {
             if (processMoveInteraction(moveCell, currentTimestamp) != null) {
-                System.out.println(getName() + " moved to cell "
-                        + "(" + moveCell.getX() + ", " + moveCell.getY() + ")"
-                        + " at timestamp " + currentTimestamp);
+                //System.out.println(getName() + " moved to cell "
+                //        + "(" + moveCell.getX() + ", " + moveCell.getY() + ")"
+                //        + " at timestamp " + currentTimestamp);
                 return moveCell;
             }
         }
@@ -236,9 +236,9 @@ public abstract class Animal extends Entity {
                 }
 
                 if (processMoveInteraction(candidateCell, currentTimestamp) != null) {
-                    System.out.println(getName() + " moved to cell "
-                            + "(" + candidateCell.getX() + ", " + candidateCell.getY() + ")"
-                            + " at timestamp " + currentTimestamp);
+                    // System.out.println(getName() + " moved to cell "
+                    //        + "(" + candidateCell.getX() + ", " + candidateCell.getY() + ")"
+                    //         + " at timestamp " + currentTimestamp);
                     return candidateCell;
                 }
             }
