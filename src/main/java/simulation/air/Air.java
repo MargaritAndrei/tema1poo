@@ -34,7 +34,10 @@ public abstract class Air extends Entity {
     }
 
     /**
-     * Calculeaza toxicitatea aerului cu formula data.
+     * Calculates the toxicity of the air using the given formula.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The calculated toxicity value, rounded and normalized.
      */
     public double calculateToxicity(final int currentTimestamp) {
         final double qualityScore = airQualityScore(currentTimestamp);
@@ -47,7 +50,9 @@ public abstract class Air extends Entity {
     }
 
     /**
-     * Adauga oxigen la aer.
+     * Adds oxygen to the air.
+     *
+     * @param amount The amount of oxygen to add.
      */
     public final void addOxygen(final double amount) {
         oxygenLevel += amount;
@@ -55,7 +60,9 @@ public abstract class Air extends Entity {
     }
 
     /**
-     * Adauga umiditate la aer.
+     * Adds humidity to the air.
+     *
+     * @param amount The amount of humidity to add.
      */
     public final void addHumidity(final double amount) {
         humidity += amount;
@@ -63,24 +70,35 @@ public abstract class Air extends Entity {
     }
 
     /**
-     * Produce schimbarea vremii, returneaza true sau false daca vremea s-a schimbat.
+     * Handles a weather event change.
+     *
+     * @param cmd              The command input containing weather details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return True if the weather changed successfully, false otherwise.
      */
     public abstract boolean handleWeatherEvent(CommandInput cmd, int currentTimestamp);
 
     /**
-     * Calculeaza calitatea aerului.
+     * Calculates the air quality score.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The calculated air quality score.
      */
     public abstract double airQualityScore(int currentTimestamp);
 
     /**
-     * Returneaza scorul specific maxim in functie de tipul de aer.
+     * Returns the maximum specific score based on the air type.
+     *
+     * @return The maximum score value.
      */
     protected abstract double maxScore();
     public final double getMaxScore() {
         return maxScore();
     }
     /**
-     * Adauga campurile specifice la output in functie de tipul aerului.
+     * Adds specific fields to the JSON output based on the air type.
+     *
+     * @param node The JSON ObjectNode to which fields will be added.
      */
     public abstract void addSpecificFieldsToJson(ObjectNode node);
 }

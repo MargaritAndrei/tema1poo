@@ -22,8 +22,10 @@ public final class Main {
     public static final ObjectWriter WRITER = MAPPER.writer().withDefaultPrettyPrinter();
 
     /**
-     * Creeaza un JSON ce contine
-     * un mesaj de eroare.
+     * Creates a JSON node containing an error message.
+     *
+     * @param message The error message to be included in the JSON.
+     * @return An ObjectNode containing the "message" field.
      */
     private static ObjectNode createErrorNode(final String message) {
         ObjectNode node = MAPPER.createObjectNode();
@@ -32,8 +34,10 @@ public final class Main {
     }
 
     /**
-     * Creeaza un JSON ce contine
-     * un mesaj normal.
+     * Creates a JSON node containing a success/info message.
+     *
+     * @param message The message to be included in the JSON.
+     * @return An ObjectNode containing the "message" field.
      */
     private static ObjectNode createMessageNode(final String message) {
         ObjectNode node = MAPPER.createObjectNode();
@@ -42,7 +46,12 @@ public final class Main {
     }
 
     /**
-     * Implementarea functiei Main, entrypoint-ul temei.
+     * The main method that handles the simulation flow.
+     * Reads input data, executes commands, and writes the result to the output file.
+     *
+     * @param inputPath  The path to the input file (JSON).
+     * @param outputPath The path to the output file where results will be written.
+     * @throws IOException If errors occur during file reading or writing.
      */
     public static void action(final String inputPath,
                               final String outputPath) throws IOException {

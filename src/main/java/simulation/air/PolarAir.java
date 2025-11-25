@@ -21,6 +21,13 @@ public final class PolarAir extends Air {
         super(name, mass, humidity, temperature, oxygenLevel);
         this.iceCrystalConcentration = Entity.round(iceCrystalConcentration);
     }
+    /**
+     * Handles a weather event change.
+     *
+     * @param cmd              The command input containing weather details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return True if the weather changed successfully, false otherwise.
+     */
     @Override
     public boolean handleWeatherEvent(final CommandInput cmd, final int currentTimestamp) {
         if (cmd.getType().equals("polarStorm")) {
@@ -30,6 +37,12 @@ public final class PolarAir extends Air {
         }
         return false;
     }
+    /**
+     * Calculates the air quality score.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The calculated air quality score.
+     */
     @Override
     public double airQualityScore(final int currentTimestamp) {
         double score = (oxygenLevel * OXYGEN_WEIGHT)
@@ -42,6 +55,11 @@ public final class PolarAir extends Air {
         double finalScore = Math.max(MIN_AIR_SCORE, Math.min(MAX_AIR_SCORE, baseScore));
         return Entity.round(finalScore);
     }
+    /**
+     * Returns the maximum specific score based on the air type.
+     *
+     * @return The maximum score value.
+     */
     @Override
     protected double maxScore() {
         return BASE_MAX_SCORE;
@@ -49,6 +67,11 @@ public final class PolarAir extends Air {
     public double getIceCrystalConcentration() {
         return iceCrystalConcentration;
     }
+    /**
+     * Adds specific fields to the JSON output based on the air type.
+     *
+     * @param node The JSON ObjectNode to which fields will be added.
+     */
     @Override
     public void addSpecificFieldsToJson(final ObjectNode node) {
         node.put("iceCrystalConcentration", getIceCrystalConcentration());

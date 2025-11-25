@@ -39,7 +39,11 @@ public final class DesertAir extends Air {
     }
 
     /**
-     * Schimba vremea, returneaza true daca s-a schimbat, altfel returneaza false.
+     * Handles a weather event change.
+     *
+     * @param cmd              The command input containing weather details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return True if the weather changed successfully, false otherwise.
      */
     @Override
     public boolean handleWeatherEvent(final CommandInput cmd, final int currentTimestamp) {
@@ -53,7 +57,10 @@ public final class DesertAir extends Air {
         return false;
     }
     /**
-     * Calculeaza calitatea aerului.
+     * Calculates the air quality score.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The calculated air quality score.
      */
     @Override
     public double airQualityScore(final int currentTimestamp) {
@@ -70,14 +77,18 @@ public final class DesertAir extends Air {
         return Entity.round(finalScore);
     }
     /**
-     * Returneaza maxScore.
+     * Returns the maximum specific score based on the air type.
+     *
+     * @return The maximum score value.
      */
     @Override
     protected double maxScore() {
         return MAX_DESERT_AIR_SCORE;
     }
     /**
-     * Adauga campurile specifice tipului de aer in output.
+     * Adds specific fields to the JSON output based on the air type.
+     *
+     * @param node The JSON ObjectNode to which fields will be added.
      */
     @Override
     public void addSpecificFieldsToJson(final ObjectNode node) {
