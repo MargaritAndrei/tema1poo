@@ -199,7 +199,9 @@ public final class Simulation {
         }
     }
     /**
-     Proceseaza interactiunile automate din mediu de la timestamp-ul curent.
+     * Processes the automatic interactions in the environment at the current timestamp.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public void evolveEnvironment(final int currentTimestamp) {
         for (int i = 0; i < map.getHeight(); i++) {
@@ -242,7 +244,11 @@ public final class Simulation {
         return createMessageNode(message);
     }
     /**
-     Proceseaza comanda robotului primita din input.
+     * Processes the robot command received from the input.
+     *
+     * @param cmd              The command input to process.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result of the command execution.
      */
     public ObjectNode dispatchCommand(final CommandInput cmd, final int currentTimestamp) {
         switch (cmd.getCommand()) {
@@ -322,21 +328,32 @@ public final class Simulation {
     }
 
     /**
-     Proceseaza miscarea robotului.
+     * Processes the robot's movement.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result message.
      */
     public ObjectNode handleMoveRobot(final int currentTimestamp) {
         String message = robot.move(this.map, currentTimestamp);
         return createMessageNode(message);
     }
     /**
-     Proceseaza incarcarea bateriei robotului.
+     * Processes the robot's battery recharge.
+     *
+     * @param cmd              The command input containing recharge details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result message.
      */
     public ObjectNode handleRechargeBattery(final CommandInput cmd, final int currentTimestamp) {
         String message = robot.rechargeBattery(cmd.getTimeToCharge(), currentTimestamp);
         return createMessageNode(message);
     }
     /**
-     Proceseaza comanda scanobject.
+     * Processes the scan object command.
+     *
+     * @param cmd              The command input containing scan details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result message.
      */
     public ObjectNode handleScanObject(final CommandInput cmd, final int currentTimestamp) {
         Cell currentCell = map.getCell(robot.getX(), robot.getY());
@@ -345,14 +362,22 @@ public final class Simulation {
         return createMessageNode(message);
     }
     /**
-     Proceseaza comanda learnfact.
+     * Processes the learn fact command.
+     *
+     * @param cmd              The command input containing fact details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result message.
      */
     public ObjectNode handleLearnFact(final CommandInput cmd, final int currentTimestamp) {
         String message = robot.learnFact(cmd.getSubject(), cmd.getComponents(), currentTimestamp);
         return createMessageNode(message);
     }
     /**
-     Proceseaza comanda improveenvironment.
+     * Processes the improve environment command.
+     *
+     * @param cmd              The command input containing improvement details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result message.
      */
     public ObjectNode handleImproveEnvironment(final CommandInput cmd, final int currentTimestamp) {
         Cell currentCell = map.getCell(robot.getX(), robot.getY());
@@ -361,7 +386,11 @@ public final class Simulation {
         return createMessageNode(message);
     }
     /**
-     Proceseaza schimbarea vremii.
+     * Processes the weather change command.
+     *
+     * @param cmd              The command input containing weather details.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the result message or error.
      */
     public ObjectNode handleChangeWeather(final CommandInput cmd, final int currentTimestamp) {
         boolean affected = false;
@@ -381,7 +410,10 @@ public final class Simulation {
         return createMessageNode("The weather has changed.");
     }
     /**
-     Proceseaza comanda getenergystatus.
+     * Processes the get energy status command.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the energy status message or error.
      */
     public ObjectNode getEnergyStatus(final int currentTimestamp) {
         if (robot.isCharging(currentTimestamp)) {
@@ -391,7 +423,10 @@ public final class Simulation {
         return createMessageNode(message);
     }
     /**
-     Proceseaza comanda printknowledgebase.
+     * Processes the print knowledge base command.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the knowledge base or error.
      */
     public ObjectNode printKnowledgeBase(final int currentTimestamp) {
         if (robot.isCharging(currentTimestamp)) {
@@ -420,7 +455,10 @@ public final class Simulation {
         return output;
     }
     /**
-     Proceseaza comanda printenvconditions.
+     * Processes the print environment conditions command.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the environment conditions or error.
      */
     public ObjectNode printEnvConditions(final int currentTimestamp) {
         if (robot.isCharging(currentTimestamp)) {
@@ -446,7 +484,10 @@ public final class Simulation {
         return output;
     }
     /**
-     Proceseaza comanda printMap.
+     * Processes the print map command.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return An ObjectNode containing the map representation or error.
      */
     public ObjectNode printMap(final int currentTimestamp) {
         if (robot.isCharging(currentTimestamp)) {

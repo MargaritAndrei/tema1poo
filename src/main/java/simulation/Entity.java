@@ -24,8 +24,11 @@ public abstract class Entity {
     }
 
     /**
-     * Functie de rotunjire: implementeaza Math.round cu
-     * parametrii din enunt.
+     * Rounding function: implements Math.round with the parameters specified
+     * in the requirements.
+     *
+     * @param value The value to be rounded.
+     * @return The rounded value.
      */
     public static double round(final double value) {
         return Math.round(value * ROUNDING_FACTOR) / ROUNDING_FACTOR;

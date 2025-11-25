@@ -26,15 +26,21 @@ public abstract class Soil extends Entity {
         this.organicMatter = Entity.round(organicMatter);
     }
     /**
-     * Calculeaza calitatea solului.
+     * Calculates the soil quality.
+     *
+     * @return The calculated soil quality score.
      */
     public abstract double calculateQuality();
     /**
-     * Calculeaza probabilitatea de a bloca TerraBot.
+     * Calculates the probability of blocking the Terrabot.
+     *
+     * @return The calculated block probability.
      */
     public abstract double calculateBlockProbability();
     /**
-     * Adauga campurile specifice tipului de sol in output.
+     * Adds specific fields to the JSON output based on the soil type.
+     *
+     * @param node The JSON ObjectNode to which fields will be added.
      */
     public abstract void addSpecificFieldsToJson(ObjectNode node);
     public final double getNitrogen() {
@@ -53,14 +59,19 @@ public abstract class Soil extends Entity {
         return organicMatter;
     }
     /**
-     * Seteaza timestampul momentului scanarii solului de catre TerraBot.
+     * Sets the timestamp when the soil was last scanned by the Terrabot.
+     *
+     * @param timestamp The timestamp of the scan.
      */
     public void setScanTimestamp(final int timestamp) {
         lastWaterAbsorptionTimestamp = timestamp;
     }
 
     /**
-     * Interactiunea cu apa
+     * Handles the interaction with water: the soil absorbs water if conditions are met.
+     *
+     * @param water            The water entity to absorb from.
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public void tryToAbsorbWater(final Water water, final int currentTimestamp) {
         if (water != null && water.isScanned()) {
@@ -73,7 +84,9 @@ public abstract class Soil extends Entity {
     }
 
     /**
-     * Adauga amount la campul organicMatter.
+     * Adds an amount to the organic matter content of the soil.
+     *
+     * @param amount The amount of organic matter to add.
      */
     public void addOrganicMatter(final double amount) {
         organicMatter += amount;
@@ -82,7 +95,10 @@ public abstract class Soil extends Entity {
     }
 
     /**
-     * Interactiunea cu planta.
+     * Handles the interaction with a plant: the plant grows if conditions are met.
+     *
+     * @param plant            The plant entity growing on the soil.
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public void tryToGrowPlant(final Plant plant, final int currentTimestamp) {
         if (plant != null && plant.isScanned()) {
@@ -92,7 +108,9 @@ public abstract class Soil extends Entity {
     }
 
     /**
-     * Adauga amount la waterRentention.
+     * Adds an amount to the water retention of the soil.
+     *
+     * @param amount The amount of water retention to add.
      */
     public void addWaterRetention(final double amount) {
         waterRetention += amount;

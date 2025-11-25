@@ -81,7 +81,10 @@ public final class Water extends Entity {
         lastInteractionTimestamp = timestamp;
     }
     /**
-     Proceseaza interactiunea cu aerul.
+     * Processes the interaction with the air: adds humidity to the air.
+     *
+     * @param air              The air entity to interact with.
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public void tryToInteractWithAir(final Air air, final int currentTimestamp) {
         if (currentTimestamp - lastInteractionTimestamp >= 2) {
@@ -90,7 +93,10 @@ public final class Water extends Entity {
         }
     }
     /**
-     Proceseaza interactiunea cu planta.
+     * Processes the interaction with a plant: helps the plant grow.
+     *
+     * @param plant            The plant entity to interact with.
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public void tryToGrowPlant(final Plant plant, final int currentTimestamp) {
         if (plant != null && plant.isScanned()) {
@@ -98,7 +104,9 @@ public final class Water extends Entity {
         }
     }
     /**
-     * Calculeaza un scor de calitate generala a apei bazat pe proprietatile sale.
+     * Calculates the general quality score of the water based on its properties.
+     *
+     * @return The calculated quality score.
      */
     public double calculateQuality() {
         double purityScore = purity / MAX_PERCENT_VALUE;

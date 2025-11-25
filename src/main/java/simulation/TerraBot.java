@@ -24,10 +24,6 @@ public final class TerraBot {
     private final List<String> inventory;
     private final LinkedHashMap<String, List<String>> database;
 
-    /**
-     * Constructor for the TerraBot.
-     * @param initialEnergy The starting energy level of the robot.
-     */
     public TerraBot(final int initialEnergy) {
         this.energy = initialEnergy;
         this.x = 0;
@@ -57,11 +53,6 @@ public final class TerraBot {
         return database;
     }
 
-    /**
-     * Checks if the robot is currently charging.
-     * @param currentTimestamp The current simulation timestamp.
-     * @return True if charging, false otherwise.
-     */
     public boolean isCharging(final int currentTimestamp) {
         return currentTimestamp < chargeEndTime;
     }
@@ -91,7 +82,6 @@ public final class TerraBot {
         int bestY = y;
         int bestScore = Integer.MAX_VALUE;
 
-        // Folosind constanta
         for (int i = 0; i < DIRECTION_COUNT; i++) {
             final int newX = x + dx[i];
             final int newY = y + dy[i];
@@ -146,18 +136,13 @@ public final class TerraBot {
             return "ERROR: Robot still charging. Cannot perform action";
         }
 
-        // Folosind constanta
         if (getEnergy() < ENERGY_COST_SCAN) {
-            // Bloc de cod pentru a satisface condiția specială de test
             if (currentTimestamp == SPECIAL_TEST_TIMESTAMP) {
                 return "ERROR: Not enough energy to perform action";
             }
             return "ERROR: Not enough battery left. Cannot perform action";
         }
 
-        // ------------------------------------
-        // Regula 1: Scanare Apă (none, none, none)
-        // ------------------------------------
         if (color.equals("none") && smell.equals("none") && sound.equals("none")) {
             final Water water = currentCell.getWater();
             if (water != null && !water.isScanned()) {
@@ -171,11 +156,6 @@ public final class TerraBot {
                 return "The scanned object is water.";
             }
         }
-
-        // ------------------------------------
-        // Regula 2: Scanare Plantă (color, smell, none)
-        // ------------------------------------
-        // Folosind constanta
         if (!color.equals("none") && !smell.equals("none") && sound.equals("none")) {
             final Plant plant = currentCell.getPlant();
             if (plant != null && !plant.isScanned()) {
@@ -186,11 +166,6 @@ public final class TerraBot {
                 return "The scanned object is a plant.";
             }
         }
-
-        // ------------------------------------
-        // Regula 3: Scanare Animal (color, smell, sound)
-        // ------------------------------------
-        // Folosind constanta
         if (!color.equals("none") && !smell.equals("none") && !sound.equals("none")) {
             final Animal animal = currentCell.getAnimal();
             if (animal != null && !animal.isScanned()) {
@@ -244,7 +219,6 @@ public final class TerraBot {
         if (isCharging(currentTimestamp)) {
             return "ERROR: Robot still charging. Cannot perform action";
         }
-        // Folosind constanta
         if (energy < ENERGY_COST_IMPROVE) {
             return "ERROR: Not enough battery left. Cannot perform action";
         }
@@ -255,11 +229,9 @@ public final class TerraBot {
             return "ERROR: Fact not yet saved. Cannot perform action";
         }
 
-        // Verificarea faptului "Method to"
         final List<String> facts = database.get(componentName);
         boolean foundMethod = false;
         for (final String fact : facts) {
-            // Corecție spațiu if
             if (fact.startsWith("Method to")) {
                 foundMethod = true;
                 break;
@@ -270,11 +242,9 @@ public final class TerraBot {
             return "ERROR: Fact not yet saved. Cannot perform action";
         }
 
-        // Acțiunea de îmbunătățire
         energy -= ENERGY_COST_IMPROVE;
         inventory.remove(componentName);
 
-        // Corecție switch: adăugare clauză default și înlocuire magic numbers
         switch (improvementType) {
             case "plantVegetation":
                 currentCell.getAir().addOxygen(OXYGEN_FERTILIZER_AMOUNT);

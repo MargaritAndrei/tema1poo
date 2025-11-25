@@ -15,13 +15,21 @@ public final class Table {
         return width;
     }
     /**
-     * Sets a Cell object to the Cell matrix.
+     * Sets a Cell object to the Cell matrix at the specified coordinates.
+     *
+     * @param x    The row index.
+     * @param y    The column index.
+     * @param cell The Cell object to set.
      */
     public void setCell(final int x, final int y, final Cell cell) {
-        this.grid[x][y] = cell;
+        grid[x][y] = cell;
     }
     /**
-     * Getter function for the Cell object located at x row and y collumn in the matrix.
+     * Retrieves the Cell object located at the specified row and column in the matrix.
+     *
+     * @param x The row index.
+     * @param y The column index.
+     * @return The Cell object at the specified coordinates, or null if out of bounds.
      */
     public Cell getCell(final int x, final int y) {
         if (0 <= x && x < height && 0 <= y && y < width) {

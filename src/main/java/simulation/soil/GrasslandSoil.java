@@ -28,7 +28,9 @@ public final class GrasslandSoil extends Soil {
     }
 
     /**
-     * Calculeaza calitatea solului.
+     * Calculates the soil quality.
+     *
+     * @return The calculated soil quality score.
      */
     @Override
     public double calculateQuality() {
@@ -41,7 +43,9 @@ public final class GrasslandSoil extends Soil {
     }
 
     /**
-     * Calculeaza blockProbability.
+     * Calculates the probability of blocking the Terrabot.
+     *
+     * @return The calculated block probability.
      */
     @Override
     public double calculateBlockProbability() {
@@ -54,7 +58,9 @@ public final class GrasslandSoil extends Soil {
     }
 
     /**
-     * Adauga campurile specifice tipului de sol in output-ul json.
+     * Adds specific fields to the JSON output based on the soil type.
+     *
+     * @param node The JSON ObjectNode to which fields will be added.
      */
     @Override
     public void addSpecificFieldsToJson(final ObjectNode node) {

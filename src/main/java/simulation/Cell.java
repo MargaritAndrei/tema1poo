@@ -9,7 +9,7 @@ import simulation.water.Water;
 
 public final class Cell {
     private static final double MAX_PERCENTAGE = 100.0;
-    private static final int BASE_RISK_COMPONENTS = 2; // Soil Block Prob + Air Toxicity
+    private static final int BASE_RISK_COMPONENTS = 2; // Soil and Air are always present
 
     private Soil soil;
     private Air air;
@@ -72,8 +72,10 @@ public final class Cell {
     }
 
     /**
-     * Calculeaza riscul unei celule in care TerraBot
-     * se poate deplasa.
+     * Calculates the risk score of a cell where the TerraBot might move.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The calculated risk score.
      */
     public int calculateRobotRiskScore(final int currentTimestamp) {
         double sum = 0;
@@ -96,8 +98,9 @@ public final class Cell {
     }
 
     /**
-     * Proceseaza interactiunile dintre entitati
-     * de pe o celula.
+     * Processes the interactions between entities on the cell.
+     *
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public void processEvolution(final int currentTimestamp) {
         if (animal != null && animal.isScanned()) {

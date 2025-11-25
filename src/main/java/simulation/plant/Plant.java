@@ -24,21 +24,28 @@ public abstract class Plant extends Entity {
     }
 
     /**
-     * Seteaza cand a crescut planta ultima oara.
+     * Sets the timestamp of the last growth event.
+     *
+     * @param timestamp The timestamp to set.
      */
     public final void setLastGrowthTimestamp(final int timestamp) {
         lastGrowthTimestamp = timestamp;
     }
 
     /**
-     * Returneaza maturitystate-ul plantei.
+     * Returns the maturity state of the plant.
+     *
+     * @return The current maturity state.
      */
     public final MaturityState getMaturityState() {
         return maturityState;
     }
 
     /**
-     * Proceseaza cresterea plantei.
+     * Processes the growth of the plant.
+     *
+     * @param amount           The amount of growth to add.
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public final void grow(final double amount, final int currentTimestamp) {
         if (maturityState == MaturityState.dead) {
@@ -66,7 +73,9 @@ public abstract class Plant extends Entity {
     }
 
     /**
-     * Calculates the total oxygen production.
+     * Calculates the total oxygen production based on the plant's maturity state.
+     *
+     * @return The calculated oxygen production value.
      */
     public final double calculateOxygenProduction() {
         if (maturityState == MaturityState.dead) {
@@ -83,21 +92,29 @@ public abstract class Plant extends Entity {
         return Entity.round(categoryOxygen() + bonusOxygen);
     }
     /**
-     * Returneaza oxigenul produs.
+     * Returns the base oxygen production for the specific plant category.
+     *
+     * @return The base oxygen production value.
      */
     protected abstract double categoryOxygen();
     /**
-     * Calculeaza posiblitatea de a bloca terrabot.
+     * Calculates the possibility of the plant blocking the Terrabot.
+     *
+     * @return The blocking possibility value.
      */
     public abstract double plantPossibility();
     /**
-     * Returneaza daca planta a fost scanata.
+     * Checks if the plant has been scanned.
+     *
+     * @return True if the plant is scanned, false otherwise.
      */
     public boolean isScanned() {
         return scanned;
     }
     /**
-     * Seteaza scanarea plantei.
+     * Sets the scanned status of the plant.
+     *
+     * @param scanned The new scanned status.
      */
     public void setScanned(final boolean scanned) {
         this.scanned = scanned;

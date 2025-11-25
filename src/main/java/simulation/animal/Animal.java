@@ -36,7 +36,9 @@ public abstract class Animal extends Entity {
     protected abstract boolean isPredator();
 
     /**
-     * Returneaza posibilitatea specifica tipului de animal.
+     * Returns the possibility specific to the animal type.
+     *
+     * @return The animal possibility value.
      */
     public abstract double animalPossibility();
 
@@ -60,7 +62,9 @@ public abstract class Animal extends Entity {
     }
 
     /**
-     * Calculeaza posiblitatea de a ataca Terrabot.
+     * Calculates the risk of attacking the Terrabot.
+     *
+     * @return The calculated attack risk score.
      */
     public final double calculateAttackRisk() {
         double score = (MAX_PERCENTAGE - animalPossibility()) / ATTACK_RISK_DIVISOR;
@@ -73,8 +77,10 @@ public abstract class Animal extends Entity {
     }
 
     /**
-     * Interactiunea dintre animal si sol: animalul fertilizeaza solul dupa
-     * ce se hraneste.
+     * Interaction between the animal and the soil: the animal fertilizes the soil
+     * after feeding.
+     *
+     * @param soil The soil to be fertilized.
      */
     public final void produceFertilizer(final Soil soil) {
         soil.addOrganicMatter(fertilizerToProduce);
@@ -82,8 +88,11 @@ public abstract class Animal extends Entity {
     }
 
     /**
-     * Interactiunea dintre animal si aer: animalul se imbolnaveste daca
-     * aerul este toxic.
+     * Interaction between the animal and the air: the animal gets sick if
+     * the air is toxic.
+     *
+     * @param currentAir       The current air entity.
+     * @param currentTimestamp The current timestamp of the simulation.
      */
     public final void updateState(final Air currentAir, final int currentTimestamp) {
         final double toxicThreshold = TOXICITY_THRESHOLD_MULTIPLIER * currentAir.getMaxScore();
@@ -96,9 +105,12 @@ public abstract class Animal extends Entity {
     }
 
     /**
-     * Proceseaza miscarea animalului: animalul incearca sa se miste pe
-     * patratica mancand animalul de pe acea patratica, daca animalul
-     * care se misca este pradator.
+     * Processes the animal's movement interaction: the animal attempts to move to a cell,
+     * eating the animal on that cell if the moving animal is a predator.
+     *
+     * @param targetCell       The cell the animal is trying to move to.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The target cell if the move is successful, null otherwise.
      */
     private Cell processMoveInteraction(final Cell targetCell, final int currentTimestamp) {
         tryToFeed(targetCell);
@@ -110,7 +122,13 @@ public abstract class Animal extends Entity {
     }
 
     /**
-     * Miscarea animalului.
+     * Moves the animal on the map.
+     *
+     * @param map              The simulation map (table).
+     * @param currentX         The current X coordinate of the animal.
+     * @param currentY         The current Y coordinate of the animal.
+     * @param currentTimestamp The current timestamp of the simulation.
+     * @return The cell the animal moved to, or null if it didn't move.
      */
     public final Cell move(final Table map, final int currentX, final int currentY,
                            final int currentTimestamp) {
@@ -229,8 +247,10 @@ public abstract class Animal extends Entity {
     }
 
     /**
-     * Functia de hranire a animalului: daca se poate acesta se hraneste
-     * cu ce exista pe patratica curenta.
+     * The animal's feeding function: if possible, it feeds on what exists
+     * in the current cell.
+     *
+     * @param currentCell The cell where the animal is currently located.
      */
     public final void tryToFeed(final Cell currentCell) {
         if (!scanned) {
